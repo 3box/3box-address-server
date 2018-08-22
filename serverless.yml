@@ -1,0 +1,92 @@
+service: 3box-root-hash-tracker
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: develop
+  region: us-west-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+      - KMS:Decrypt
+      Resource: ${self:custom.kmsSecrets.keyArn}
+    - Effect: Allow
+      Action:
+      - s3:*
+      Resource: 'arn:aws:s3:::*'
+
+  environment:
+      SECRETS: ${self:custom.kmsSecrets.secrets.SECRETS}
+
+# Use the serverless-webpack plugin to transpile ES6
+plugins:
+  - serverless-webpack
+  - serverless-kms-secrets
+  - serverless-offline
+
+# Enable auto-packing of external modules
+custom:
+  webpackIncludeModules: true
+  serverless-kms-secrets:
+    secretsFile: kms-secrets.${opt:stage, self:provider.stage}.${opt:region, self:provider.region}.yml
+  kmsSecrets: ${file(kms-secrets.${opt:stage, self:provider.stage}.${opt:region, self:provider.region}.yml)}
+  contentCompression: 1024
+
+functions:
+
+  hash_post:
+    handler: src/api_handler.hash_post
+    timeout: 30
+    events:
+      - http:
+         path: hash
+         method: post
+         cors: true
+
+  hash_get:
+    handler: src/api_handler.hash_get
+    timeout: 30
+    events:
+      - http:
+         path: hash/{id}
+         method: get
+         cors: true
+         request:
+            parameters:
+              paths:
+                id: true
+
+  link_post:
+    handler: src/api_handler.link_post
+    timeout: 30
+    events:
+      - http:
+         path: link
+         method: post
+         cors: true
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: 3box-root-hash-tracker # NOTE: update this with your service name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+# you can overwrite defaults here
+  stage: develop
+  region: us-west-2
