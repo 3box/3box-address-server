@@ -1,12 +1,17 @@
 const AWS = require("aws-sdk");
+const ipfs = require("ipfs-js");
 
 class IpfsMgr {
-  constructor() {
-    //this.ipfsEndpoint = this.ipfsEndpoint;
+  constructor(endpoint) {
+    this.ipfsEndpoint = endpoint;
   }
 
   isSecretsSet() {
     return true;
+  }
+
+  async getHash(identity) {
+    //TODO: get the ipfs hash associated with the identity
   }
 }
 

@@ -74,7 +74,7 @@ module.exports.hash_post = (event, context, callback) => {
   preHandler(hashPostHandler, event, context, callback);
 };
 
-let hashGetHandler = new HashGetHandler();
+let hashGetHandler = new HashGetHandler(ipfsMgr);
 module.exports.hash_get = (event, context, callback) => {
   preHandler(hashGetHandler, event, context, callback);
 };
