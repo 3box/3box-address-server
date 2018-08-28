@@ -3,10 +3,16 @@
 const AWS = require("aws-sdk");
 
 const IpfsMgr = require("./lib/ipfsMgr");
+const HashMgr = require("./lib/hashMgr");
+const UportMgr = require("./lib/uPortMgr");
 
 const HashPostHandler = require("./api/hash_post");
 const HashGetHandler = require("./api/hash_get");
 const LinkPostHandler = require("./api/link_post");
+
+let ipfsMgr = new IpfsMgr();
+let uPortMgr = new UportMgr();
+let hashMgr = new HashMgr();
 
 const doHandler = (handler, event, context, callback) => {
   handler.handle(event, context, (err, resp) => {
@@ -51,7 +57,6 @@ const doHandler = (handler, event, context, callback) => {
   });
 };
 
-let ipfsMgr = new IpfsMgr();
 const preHandler = (handler, event, context, callback) => {
   //console.log(event)
   if (!ipfsMgr.isSecretsSet()) {
@@ -69,7 +74,7 @@ const preHandler = (handler, event, context, callback) => {
   }
 };
 
-let hashPostHandler = new HashPostHandler();
+let hashPostHandler = new HashPostHandler(uPortMgr, hashMgr);
 module.exports.hash_post = (event, context, callback) => {
   preHandler(hashPostHandler, event, context, callback);
 };

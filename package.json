@@ -38,6 +38,7 @@
     "aws-sdk": "^2.297.0",
     "did-jwt": "^0.0.8",
     "ethr-did-resolver": "^0.0.8",
+    "ipfs-js": "0.0.11",
     "muport-did-resolver": "^0.2.0",
     "serverless-kms-secrets": "^1.0.3",
     "serverless-webpack": "^3.1.2",

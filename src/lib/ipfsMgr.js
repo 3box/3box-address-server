@@ -12,6 +12,8 @@ class IpfsMgr {
 
   async getHash(identity) {
     //TODO: get the ipfs hash associated with the identity
+    if (!identity) throw new Error("no identity");
+    return true;
   }
 }
 

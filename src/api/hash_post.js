@@ -1,6 +1,7 @@
 class HashPostHandler {
-  constructor(uPortMgr) {
+  constructor(uPortMgr, hashMgr) {
     this.uPortMgr = uPortMgr;
+    this.hashMgr = hashMgr;
   }
 
   async handle(event, context, cb) {
@@ -35,6 +36,8 @@ class HashPostHandler {
       cb({ code: 403, message: "Missing data" });
       return;
     }
+
+    await this.hashMgr.storeHash(payload.hash);
 
     cb(null, payload.hash);
     return;

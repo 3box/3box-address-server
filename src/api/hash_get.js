@@ -1,10 +1,9 @@
 class HashGetHandler {
-  async handle(event, context, cb) {
-    if (!event.headers) {
-      cb({ code: 403, message: "no headers" });
-      return;
-    }
+  constructor(ipfsMgr) {
+    this.ipfsMgr = ipfsMgr;
+  }
 
+  async handle(event, context, cb) {
     if (event.pathParameters && event.pathParameters.identity) {
       let identity = event.pathParameters.identity;
       if (!this.ipfsMgr.getHash(identity)) {

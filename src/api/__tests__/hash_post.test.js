@@ -1,11 +1,16 @@
-const HashPostHandler = require("../hash_post");
-const UportMgr = require("../../lib/uPortMgr");
-const MockDate = require("mockdate");
 import { TokenVerifier, SimpleSigner } from "did-jwt";
+
+const HashPostHandler = require("../hash_post");
+
+const UportMgr = require("../../lib/uPortMgr");
+const HashMgr = require("../../lib/hashMgr");
+
+const MockDate = require("mockdate");
 
 describe("HashPostHandler", () => {
   let sut;
   let uPortMgrMock = new UportMgr();
+  let hashMgrMock = new HashMgr();
 
   const privateKey =
     "278a5de700e29faae8e40e366ec5012b5ec63d36ec77e8a2417154cc1d25383f";
@@ -16,7 +21,7 @@ describe("HashPostHandler", () => {
   const invalidToken =
     "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOjE0ODUzMjExMzMsImhhcyI6IlFtV1lwelg2aG4ySmdoTlZoU1pHY01tOWRhbXJ1Nnhqd1pZWTlNcFpZcDNjcUgiLCJpc3MiOiJkaWQ6dXBvcnQ6Mm9zbmZKNFd5N0xCQW0yblBCWGlyZTFXZlFuNzVSclY2VHMifQ.EpAYedYq9IEqgGkvGyvUPsrqCKIqs98YlwpYyPKc46rlZcrJozrNog6lH4AyBW1d3ecJgdxwzq7PNzpgJFWY6A";
   beforeAll(() => {
-    sut = new HashPostHandler(uPortMgrMock);
+    sut = new HashPostHandler(uPortMgrMock, hashMgrMock);
   });
 
   test("empty constructor", () => {
