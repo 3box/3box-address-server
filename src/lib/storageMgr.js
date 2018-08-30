@@ -1,12 +1,14 @@
-const AWS = require("aws-sdk");
-const ipfs = require("ipfs-js");
+import { AWS } from "aws-sdk";
 
-class IpfsMgr {
-  constructor(endpoint) {
-    this.ipfsEndpoint = endpoint;
-  }
+class StorageMgr {
+  constructor() {}
 
   isSecretsSet() {
+    return true;
+  }
+
+  async storeHash(hash) {
+    if (!hash) throw new Error("no hash");
     return true;
   }
 
@@ -17,4 +19,4 @@ class IpfsMgr {
   }
 }
 
-module.exports = IpfsMgr;
+module.exports = StorageMgr;

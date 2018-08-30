@@ -2,11 +2,11 @@ const HashGetHandler = require("../hash_get");
 
 describe("LinkPostHandler", () => {
   let sut;
-  let ipfsMgrMock;
+  let storageMgrMock;
 
   beforeAll(() => {
-    ipfsMgrMock = jest.fn();
-    sut = new HashGetHandler(ipfsMgrMock);
+    storageMgrMock = jest.fn();
+    sut = new HashGetHandler(storageMgrMock);
   });
 
   test("empty constructor", () => {
@@ -22,7 +22,7 @@ describe("LinkPostHandler", () => {
   });
 
   test.skip("GET identity not found", done => {
-    this.ipfsMgr = null;
+    this.storageMgrMock = null;
     sut.handle({}, {}, (err, res) => {
       expect(err).not.toBeNull();
       expect(err.code).toEqual(400);

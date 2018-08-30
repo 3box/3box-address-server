@@ -2,17 +2,15 @@
 
 const AWS = require("aws-sdk");
 
-const IpfsMgr = require("./lib/ipfsMgr");
-const HashMgr = require("./lib/hashMgr");
+const StorageMgr = require("./lib/storageMgr");
 const UportMgr = require("./lib/uPortMgr");
 
 const HashPostHandler = require("./api/hash_post");
 const HashGetHandler = require("./api/hash_get");
 const LinkPostHandler = require("./api/link_post");
 
-let ipfsMgr = new IpfsMgr();
 let uPortMgr = new UportMgr();
-let hashMgr = new HashMgr();
+let storageMgr = new StorageMgr();
 
 const doHandler = (handler, event, context, callback) => {
   handler.handle(event, context, (err, resp) => {
@@ -32,7 +30,6 @@ const doHandler = (handler, event, context, callback) => {
         })
       };
     } else {
-      //console.log(err);
       let code = 500;
       if (err.code) code = err.code;
       let message = err;
@@ -59,14 +56,14 @@ const doHandler = (handler, event, context, callback) => {
 
 const preHandler = (handler, event, context, callback) => {
   //console.log(event)
-  if (!ipfsMgr.isSecretsSet()) {
+  if (!storageMgr.isSecretsSet()) {
     const kms = new AWS.KMS();
     kms
       .decrypt({ CiphertextBlob: Buffer(process.env.SECRETS, "base64") })
       .promise()
       .then(data => {
         const decrypted = String(data.Plaintext);
-        ipfsMgr.setSecrets(JSON.parse(decrypted));
+        storageMgr.setSecrets(JSON.parse(decrypted));
         doHandler(handler, event, context, callback);
       });
   } else {
@@ -74,17 +71,17 @@ const preHandler = (handler, event, context, callback) => {
   }
 };
 
-let hashPostHandler = new HashPostHandler(uPortMgr, hashMgr);
+let hashPostHandler = new HashPostHandler(uPortMgr, storageMgr);
 module.exports.hash_post = (event, context, callback) => {
   preHandler(hashPostHandler, event, context, callback);
 };
 
-let hashGetHandler = new HashGetHandler(ipfsMgr);
+let hashGetHandler = new HashGetHandler(storageMgr);
 module.exports.hash_get = (event, context, callback) => {
   preHandler(hashGetHandler, event, context, callback);
 };
 
-let linkPostHandler = new LinkPostHandler();
+let linkPostHandler = new LinkPostHandler(storageMgr);
 module.exports.link_post = (event, context, callback) => {
   preHandler(linkPostHandler, event, context, callback);
 };
