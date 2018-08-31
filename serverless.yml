@@ -22,7 +22,6 @@ provider:
 plugins:
   - serverless-webpack
   - serverless-kms-secrets
-  - serverless-offline
 
 # Enable auto-packing of external modules
 custom:

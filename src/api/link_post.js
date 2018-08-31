@@ -17,7 +17,7 @@ class LinkPostHandler {
       return;
     }
 
-    await this.storageMgr.storeHash(linked_did);
+    await this.storageMgr.storeHash(body.consent_signature, body.linked_did);
 
     cb(null);
     return;
