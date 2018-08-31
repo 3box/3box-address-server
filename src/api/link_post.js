@@ -17,6 +17,8 @@ class LinkPostHandler {
       return;
     }
 
+    await this.storageMgr.storeHash(linked_did);
+
     cb(null);
     return;
   }
