@@ -56,12 +56,12 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 
 ```
 {
-    consent_signature: <EIP712 signature>,
+    consent_signature: <signature>,
     linked_did: <DID>
 }
 ```
 
-The `consent_signature` is a [EIP712 signature](https://eips.ethereum.org/EIPS/eip-712) of a consent message and the DID to be linked. The data of the EIP712 signature is:
+The `consent_signature` is a `personal_sign` signature  of a consent message and the DID to be linked. The data of the signature is:
 ```
 [{
   type: 'string',
