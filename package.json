@@ -40,6 +40,7 @@
     "muport-did-resolver": "^0.2.0",
     "pg": "^7.4.3",
     "serverless-kms-secrets": "^1.0.3",
+    "serverless-offline": "^3.25.10",
     "serverless-webpack": "^3.1.2",
     "uport-did-resolver": "^0.0.2",
     "webpack": "^3.10.0",
