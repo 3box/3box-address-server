@@ -1,2 +1,2 @@
-# 3box-root-hash-tracker
-3Box Root hash tracker
+# 3box Hash Server
+3Box Hash Server is a server that keeps track of the latest 3Box hash for each user.
