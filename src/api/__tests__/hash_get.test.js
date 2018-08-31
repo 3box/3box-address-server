@@ -5,7 +5,10 @@ describe("LinkPostHandler", () => {
   let storageMgrMock;
 
   beforeAll(() => {
-    storageMgrMock = jest.fn();
+    storageMgrMock = {
+      connect: jest.fn(),
+      end: jest.fn()
+    };
     sut = new HashGetHandler(storageMgrMock);
   });
 
@@ -22,7 +25,6 @@ describe("LinkPostHandler", () => {
   });
 
   test.skip("GET identity not found", done => {
-    this.storageMgrMock = null;
     sut.handle({}, {}, (err, res) => {
       expect(err).not.toBeNull();
       expect(err.code).toEqual(400);

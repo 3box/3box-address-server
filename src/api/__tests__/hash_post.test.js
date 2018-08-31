@@ -3,14 +3,16 @@ import { TokenVerifier, SimpleSigner } from "did-jwt";
 const HashPostHandler = require("../hash_post");
 
 const UportMgr = require("../../lib/uPortMgr");
-const StorageMgr = require("../../lib/storageMgr");
 
 const MockDate = require("mockdate");
 
 describe("HashPostHandler", () => {
   let sut;
   let uPortMgrMock = new UportMgr();
-  let storageMgrMock = new StorageMgr();
+  let storageMgrMock = {
+    storeHash: jest.fn(),
+    end: jest.fn()
+  };
 
   const privateKey =
     "278a5de700e29faae8e40e366ec5012b5ec63d36ec77e8a2417154cc1d25383f";

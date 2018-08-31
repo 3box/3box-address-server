@@ -1,3 +1,12 @@
+jest.mock("pg");
+import { Client } from "pg";
+let pgClientMock = {
+  connect: jest.fn(),
+  end: jest.fn()
+};
+Client.mockImplementation(() => {
+  return pgClientMock;
+});
 const StorageMgr = require("../storageMgr");
 
 describe("StorageMgr", () => {
@@ -8,6 +17,31 @@ describe("StorageMgr", () => {
 
   beforeEach(() => {
     sut = new StorageMgr();
+  });
+
+  test("is isSecretsSet", () => {
+    let secretSet = sut.isSecretsSet();
+    expect(secretSet).toEqual(false);
+  });
+
+  test("getHash() no pgUrl set", done => {
+    sut
+      .getHash(ethereumAddr)
+      .then(resp => {
+        fail("shouldn't return");
+        done();
+      })
+      .catch(err => {
+        expect(err.message).toEqual("no pgUrl set");
+        done();
+      });
+  });
+
+  test("setSecrets", () => {
+    expect(sut.isSecretsSet()).toEqual(false);
+    sut.setSecrets({ PG_URL: "fake" });
+    expect(sut.isSecretsSet()).toEqual(true);
+    expect(sut.pgUrl).not.toBeUndefined();
   });
 
   test("getHash() no hash", done => {
@@ -24,15 +58,25 @@ describe("StorageMgr", () => {
   });
 
   test("getHash() did", done => {
-    sut.getHash(did).then(resp => {
-      expect(resp).toBeTruthy();
-      done();
-    });
-  });
+    sut.setSecrets({ PG_URL: "fake" });
 
-  test("getHash() ethereum address", done => {
-    sut.getHash(ethereumAddr).then(resp => {
-      expect(resp).toBeTruthy();
+    pgClientMock.connect = jest.fn();
+    pgClientMock.connect.mockClear();
+    pgClientMock.end.mockClear();
+    pgClientMock.query = jest.fn(() => {
+      return Promise.resolve({ rows: [ipfsHash] });
+    });
+
+    sut.getHash(did).then(resp => {
+      expect(pgClientMock.connect).toBeCalled();
+      expect(pgClientMock.query).toBeCalled();
+      expect(pgClientMock.query).toBeCalledWith(
+        `SELECT hash FROM registry WHERE identity = $1`,
+        [did]
+      );
+      expect(pgClientMock.end).toBeCalled();
+      expect(resp).toEqual(ipfsHash);
+
       done();
     });
   });
@@ -51,7 +95,23 @@ describe("StorageMgr", () => {
   });
 
   test("storeHash() happy path", done => {
+    sut.setSecrets({ PG_URL: "fake" });
+
+    pgClientMock.connect = jest.fn();
+    pgClientMock.connect.mockClear();
+    pgClientMock.end.mockClear();
+    pgClientMock.query = jest.fn(() => {
+      return Promise.resolve(true);
+    });
+
     sut.storeHash(ipfsHash).then(resp => {
+      expect(pgClientMock.connect).toBeCalled();
+      expect(pgClientMock.query).toBeCalled();
+      expect(pgClientMock.query).toBeCalledWith(
+        `INSERT INTO registry(hash) VALUES ($1)`,
+        [ipfsHash]
+      );
+      expect(pgClientMock.end).toBeCalled();
       expect(resp).toBeTruthy();
       done();
     });
