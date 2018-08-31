@@ -1,4 +1,4 @@
-service: 3box-hash-server
+service: threebox-hash-server
 
 provider:
   name: aws
