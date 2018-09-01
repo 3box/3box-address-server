@@ -1,4 +1,4 @@
-# 3box-root-hash-tracker
+# 3box-hash-server
 
 **Warning:** This project is under active development, APIs are subject to change.
 
@@ -70,7 +70,7 @@ The `consent_signature` is a `personal_sign` signature  of a consent message and
 }]
 ```
 
-The address to be linked is recovered from the EIP712 signature.
+The address to be linked is recovered from the signature.
 
 #### Response
 

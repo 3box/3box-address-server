@@ -1,5 +1,5 @@
 {
-  "name": "3box-root-hash-tracker",
+  "name": "3box-hash-server",
   "version": "0.0.1",
   "description": "Keeps track of the root hashes to the user managed data platform",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uport-project/3box-root-hash-tracker.git"
+    "url": "git+https://github.com/uport-project/3box-hash-server.git"
   },
   "keywords": [
     "3box",
