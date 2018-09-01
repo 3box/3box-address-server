@@ -37,7 +37,7 @@ class HashPostHandler {
       return;
     }
 
-    await this.storageMgr.storeHash(payload.hash);
+    await this.storageMgr.storeHash(payload.hash, payload.iss);
 
     cb(null, payload.hash);
     return;

@@ -13,16 +13,18 @@ class StorageMgr {
     this.pgUrl = secrets.PG_URL;
   }
 
-  async storeHash(hash) {
+  async storeHash(hash, identity) {
     if (!hash) throw new Error("no hash");
+    if (!identity) throw new Error("no identity");
     if (!this.pgUrl) throw new Error("no pgUrl set");
 
     const client = new Client({ connectionString: this.pgUrl });
     try {
       await client.connect();
-      const res = await client.query(`INSERT INTO registry(hash) VALUES ($1)`, [
-        hash
-      ]);
+      const res = await client.query(
+        `INSERT INTO registry(hash, identity) VALUES ($1, $2)`,
+        [hash, identity]
+      );
       return res;
     } catch (e) {
       throw e;

@@ -104,12 +104,12 @@ describe("StorageMgr", () => {
       return Promise.resolve(true);
     });
 
-    sut.storeHash(ipfsHash).then(resp => {
+    sut.storeHash(ipfsHash, did).then(resp => {
       expect(pgClientMock.connect).toBeCalled();
       expect(pgClientMock.query).toBeCalled();
       expect(pgClientMock.query).toBeCalledWith(
-        `INSERT INTO registry(hash) VALUES ($1)`,
-        [ipfsHash]
+        `INSERT INTO registry(hash, identity) VALUES ($1, $2)`,
+        [ipfsHash, did]
       );
       expect(pgClientMock.end).toBeCalled();
       expect(resp).toBeTruthy();
