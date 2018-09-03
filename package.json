@@ -1,0 +1,55 @@
+{
+  "name": "3box-hash-server",
+  "version": "0.0.1",
+  "description": "Keeps track of the root hashes to the user managed data platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose --runInBand",
+    "coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uport-project/3box-hash-server.git"
+  },
+  "keywords": [
+    "3box",
+    "self-managed-data",
+    "distributed-storage",
+    "ipfs",
+    "uport"
+  ],
+  "author": "Cristóbal Castillo <cristobal.castillo@consensys.net>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/uport-project/3box-hash-server/issues"
+  },
+  "homepage": "https://github.com/uport-project/3box-hash-server#readme",
+  "devDependencies": {
+    "aws-sdk-mock": "^4.1.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.4.2",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^21.2.0",
+    "mockdate": "^2.0.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.297.0",
+    "did-jwt": "^0.0.8",
+    "eth-sig-util": "^2.0.2",
+    "ethr-did-resolver": "^0.0.8",
+    "muport-did-resolver": "^0.2.0",
+    "pg": "^7.4.3",
+    "serverless-kms-secrets": "^1.0.3",
+    "serverless-offline": "^3.25.10",
+    "serverless-webpack": "^3.1.2",
+    "uport-did-resolver": "^0.0.2",
+    "webpack": "^3.10.0",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "testURL": "http://localhost"
+  }
+}
