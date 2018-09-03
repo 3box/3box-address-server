@@ -21,9 +21,9 @@
   "author": "Cristóbal Castillo <cristobal.castillo@consensys.net>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/uport-project/3box-root-hash-tracker/issues"
+    "url": "https://github.com/uport-project/3box-hash-server/issues"
   },
-  "homepage": "https://github.com/uport-project/3box-root-hash-tracker#readme",
+  "homepage": "https://github.com/uport-project/3box-hash-server#readme",
   "devDependencies": {
     "aws-sdk-mock": "^4.1.0",
     "babel-core": "^6.26.3",

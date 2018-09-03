@@ -81,12 +81,12 @@ module.exports.hash_post = (event, context, callback) => {
   preHandler(hashPostHandler, event, context, callback);
 };
 
-let hashGetHandler = new HashGetHandler(hashMgr,linkMgr);
+let hashGetHandler = new HashGetHandler(hashMgr, linkMgr);
 module.exports.hash_get = (event, context, callback) => {
   preHandler(hashGetHandler, event, context, callback);
 };
 
-let linkPostHandler = new LinkPostHandler(sigMgr,linkMgr);
+let linkPostHandler = new LinkPostHandler(sigMgr, linkMgr);
 module.exports.link_post = (event, context, callback) => {
   preHandler(linkPostHandler, event, context, callback);
 };

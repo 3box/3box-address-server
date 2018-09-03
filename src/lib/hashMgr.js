@@ -41,10 +41,9 @@ class HashMgr {
 
     try {
       await client.connect();
-      const res = await client.query(
-        `SELECT hash FROM hashes WHERE did = $1`,
-        [did]
-      );
+      const res = await client.query(`SELECT hash FROM hashes WHERE did = $1`, [
+        did
+      ]);
       return res.rows[0];
     } catch (e) {
       throw e;

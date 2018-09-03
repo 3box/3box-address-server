@@ -6,8 +6,8 @@ describe("HashGetHandler", () => {
   let linkMgrMock;
   let address = "0xbf7571b900839fa871e6f6efbbfd238eaa502735";
   let did = "did:muport:QmRhjfL4HLdB8LovGf1o43NJ8QnbfqmpdnTuBvZTewnuBV";
-  let hash = "QmWYpzX6hn2JghNVhSZGcMm9damru6xjwZYY9MpZYp3cqH"
-  
+  let hash = "QmWYpzX6hn2JghNVhSZGcMm9damru6xjwZYY9MpZYp3cqH";
+
   beforeAll(() => {
     hashMgrMock = {
       get: jest.fn()
@@ -83,25 +83,21 @@ describe("HashGetHandler", () => {
 
       expect(err).toBeNull();
       expect(res).not.toBeNull();
-      expect(res.hash).toEqual({hash: hash});
+      expect(res.hash).toEqual({ hash: hash });
       done();
     });
   });
 
   test.skip("happy path (did)", done => {
     sut.handle({ pathParameters: { id: did } }, {}, (err, res) => {
-      hashMgrMock.get.mockReturnValue({hash: hash});
+      hashMgrMock.get.mockReturnValue({ hash: hash });
 
       expect(hashMgrMock.get).toBeCalledWith(did);
 
       expect(err).toBeNull();
       expect(res).not.toBeNull();
-      expect(res).toEqual({hash: hash});
+      expect(res).toEqual({ hash: hash });
       done();
     });
   });
-
-
-
-
 });
