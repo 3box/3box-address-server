@@ -1,7 +1,7 @@
 class HashPostHandler {
-  constructor(uPortMgr, storageMgr) {
+  constructor(uPortMgr, hashMgr) {
     this.uPortMgr = uPortMgr;
-    this.storageMgr = storageMgr;
+    this.hashMgr = hashMgr;
   }
 
   async handle(event, context, cb) {
@@ -37,7 +37,7 @@ class HashPostHandler {
       return;
     }
 
-    await this.storageMgr.storeHash(payload.hash, payload.iss);
+    await this.hashMgr.store(payload.hash, payload.iss);
 
     cb(null, payload.hash);
     return;

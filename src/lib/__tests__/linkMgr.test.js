@@ -7,16 +7,16 @@ let pgClientMock = {
 Client.mockImplementation(() => {
   return pgClientMock;
 });
-const StorageMgr = require("../storageMgr");
+const LinkMgr = require("../linkMgr");
 
-describe("StorageMgr", () => {
+describe("LinkMgr", () => {
   let sut;
-  let ipfsHash = "QmWYpzX6hn2JghNVhSZGcMm9damru6xjwZYY9MpZYp3cqH";
+  let address = "0xbf7571b900839fa871e6f6efbbfd238eaa502735";
   let did = "did:muport:QmRhjfL4HLdB8LovGf1o43NJ8QnbfqmpdnTuBvZTewnuBV";
-  let ethereumAddr = "0x0";
+  let consent = '0xc0e8fb9dea14122d68fd32489a49e063a58553dc6f37038f49671276177507f93096c14ea6f20b40f309add9459f49f1d06afa5331d06d75f90fb1163bf41d341c';
 
   beforeEach(() => {
-    sut = new StorageMgr();
+    sut = new LinkMgr();
   });
 
   test("is isSecretsSet", () => {
@@ -24,9 +24,9 @@ describe("StorageMgr", () => {
     expect(secretSet).toEqual(false);
   });
 
-  test("getHash() no pgUrl set", done => {
+  test("get() no pgUrl set", done => {
     sut
-      .getHash(ethereumAddr)
+      .get(did)
       .then(resp => {
         fail("shouldn't return");
         done();
@@ -44,57 +44,83 @@ describe("StorageMgr", () => {
     expect(sut.pgUrl).not.toBeUndefined();
   });
 
-  test("getHash() no hash", done => {
+  test("get() no address", done => {
     sut
-      .getHash()
+      .get()
       .then(resp => {
         fail("shouldn't return");
         done();
       })
       .catch(err => {
-        expect(err.message).toEqual("no identity");
+        expect(err.message).toEqual("no address");
         done();
       });
   });
 
-  test("getHash() did", done => {
+  test("get() address", done => {
     sut.setSecrets({ PG_URL: "fake" });
 
     pgClientMock.connect = jest.fn();
     pgClientMock.connect.mockClear();
     pgClientMock.end.mockClear();
     pgClientMock.query = jest.fn(() => {
-      return Promise.resolve({ rows: [ipfsHash] });
+      return Promise.resolve({ rows: [did] });
     });
 
-    sut.getHash(did).then(resp => {
+    sut.get(address).then(resp => {
       expect(pgClientMock.connect).toBeCalled();
       expect(pgClientMock.query).toBeCalled();
       expect(pgClientMock.query).toBeCalledWith(
-        `SELECT hash FROM registry WHERE identity = $1`,
-        [did]
+        `SELECT did FROM links WHERE address = $1`,
+        [address]
       );
       expect(pgClientMock.end).toBeCalled();
-      expect(resp).toEqual(ipfsHash);
+      expect(resp).toEqual(did);
 
       done();
     });
   });
 
-  test("storeHash() no hash", done => {
+  test("store() no address", done => {
     sut
-      .storeHash()
+      .store()
       .then(resp => {
         fail("shouldn't return");
         done();
       })
       .catch(err => {
-        expect(err.message).toEqual("no hash");
+        expect(err.message).toEqual("no address");
         done();
       });
   });
 
-  test("storeHash() happy path", done => {
+  test("store() no did", done => {
+    sut
+      .store(address)
+      .then(resp => {
+        fail("shouldn't return");
+        done();
+      })
+      .catch(err => {
+        expect(err.message).toEqual("no did");
+        done();
+      });
+  });
+
+  test("store() no consent", done => {
+    sut
+      .store(address,did)
+      .then(resp => {
+        fail("shouldn't return");
+        done();
+      })
+      .catch(err => {
+        expect(err.message).toEqual("no consent");
+        done();
+      });
+  });
+
+  test("store() happy path", done => {
     sut.setSecrets({ PG_URL: "fake" });
 
     pgClientMock.connect = jest.fn();
@@ -104,12 +130,12 @@ describe("StorageMgr", () => {
       return Promise.resolve(true);
     });
 
-    sut.storeHash(ipfsHash, did).then(resp => {
+    sut.store(address, did, consent).then(resp => {
       expect(pgClientMock.connect).toBeCalled();
       expect(pgClientMock.query).toBeCalled();
       expect(pgClientMock.query).toBeCalledWith(
-        `INSERT INTO registry(hash, identity) VALUES ($1, $2)`,
-        [ipfsHash, did]
+        `INSERT INTO links(address, did, consent) VALUES ($1, $2, $3)`,
+        [address, did, consent]
       );
       expect(pgClientMock.end).toBeCalled();
       expect(resp).toBeTruthy();
