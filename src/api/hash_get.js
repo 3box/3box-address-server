@@ -4,15 +4,15 @@ class HashGetHandler {
   }
 
   async handle(event, context, cb) {
-    if (event.pathParameters && event.pathParameters.identity) {
-      let identity = event.pathParameters.identity;
+    if (event.pathParameters && event.pathParameters.id) {
+      let id = event.pathParameters.id;
       if (!this.storageMgr.getHash(identity)) {
-        cb({ code: 404, message: "Identity not found" });
+        cb({ code: 404, message: "Hash not found" });
       } else {
-        cb(null, { hash: this.storageMgr.getHash(identity) });
+        cb(null, { hash: this.storageMgr.getHash(id) });
       }
     } else {
-      cb({ code: 400, mesasge: "No identity parameter" });
+      cb({ code: 400, mesasge: "No id parameter" });
     }
   }
 }
