@@ -120,7 +120,7 @@ describe("HashMgr", () => {
       expect(pgClientMock.connect).toBeCalled();
       expect(pgClientMock.query).toBeCalled();
       expect(pgClientMock.query).toBeCalledWith(
-        `INSERT INTO hashes(hash, did) VALUES ($1, $2)`,
+        `INSERT INTO hashes(hash, did) VALUES ($1, $2) ON CONFLICT (did) DO UPDATE SET hash = EXCLUDED.hash`,
         [ipfsHash, did]
       );
       expect(pgClientMock.end).toBeCalled();

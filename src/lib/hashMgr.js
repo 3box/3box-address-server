@@ -22,7 +22,7 @@ class HashMgr {
     try {
       await client.connect();
       const res = await client.query(
-        `INSERT INTO hashes(hash, did) VALUES ($1, $2)`,
+        `INSERT INTO hashes(hash, did) VALUES ($1, $2) ON CONFLICT (did) DO UPDATE SET hash = EXCLUDED.hash`,
         [hash, did]
       );
       return res;
