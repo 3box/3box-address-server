@@ -32,11 +32,15 @@ class LinkPostHandler {
     const did = body.linked_did;
     
     //Get address from sigsignature + msg
-    const address='';
+    const address=await this.sigMgr.verify(msg,sig);
+    const consent = {
+      sig: sig,
+      msg: msg
+    }
 
-    await this.linkMgr.store(address, did, consent);
+    await this.linkMgr.store(address, did, JSON.stringify(consent));
 
-    cb(null);
+    cb(null,{did: did, address: address});
     return;
   }
 }
