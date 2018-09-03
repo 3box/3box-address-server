@@ -9,9 +9,8 @@ const MockDate = require("mockdate");
 describe("HashPostHandler", () => {
   let sut;
   let uPortMgrMock = new UportMgr();
-  let storageMgrMock = {
-    storeHash: jest.fn(),
-    end: jest.fn()
+  let hashMgrMock = {
+    store: jest.fn()
   };
 
   const privateKey =
@@ -23,7 +22,7 @@ describe("HashPostHandler", () => {
   const invalidToken =
     "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOjE0ODUzMjExMzMsImhhcyI6IlFtV1lwelg2aG4ySmdoTlZoU1pHY01tOWRhbXJ1Nnhqd1pZWTlNcFpZcDNjcUgiLCJpc3MiOiJkaWQ6dXBvcnQ6Mm9zbmZKNFd5N0xCQW0yblBCWGlyZTFXZlFuNzVSclY2VHMifQ.EpAYedYq9IEqgGkvGyvUPsrqCKIqs98YlwpYyPKc46rlZcrJozrNog6lH4AyBW1d3ecJgdxwzq7PNzpgJFWY6A";
   beforeAll(() => {
-    sut = new HashPostHandler(uPortMgrMock, storageMgrMock);
+    sut = new HashPostHandler(uPortMgrMock, hashMgrMock);
   });
 
   test("empty constructor", () => {

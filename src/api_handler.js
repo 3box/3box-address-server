@@ -5,12 +5,14 @@ const AWS = require("aws-sdk");
 const HashMgr = require("./lib/hashMgr");
 const LinkMgr = require("./lib/linkMgr");
 const UportMgr = require("./lib/uPortMgr");
+const SigMgr = require("./lib/sigMgr");
 
 const HashPostHandler = require("./api/hash_post");
 const HashGetHandler = require("./api/hash_get");
 const LinkPostHandler = require("./api/link_post");
 
 let uPortMgr = new UportMgr();
+let sigMgr = new SigMgr();
 let hashMgr = new HashMgr();
 let linkMgr = new LinkMgr();
 
@@ -84,7 +86,7 @@ module.exports.hash_get = (event, context, callback) => {
   preHandler(hashGetHandler, event, context, callback);
 };
 
-let linkPostHandler = new LinkPostHandler(linkMgr);
+let linkPostHandler = new LinkPostHandler(sigMgr,linkMgr);
 module.exports.link_post = (event, context, callback) => {
   preHandler(linkPostHandler, event, context, callback);
 };

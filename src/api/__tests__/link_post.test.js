@@ -24,7 +24,7 @@ describe("LinkPostHandler", () => {
     sut.handle({ body: "{}" }, {}, (err, res) => {
       expect(err).not.toBeNull();
       expect(err.code).toEqual(403);
-      expect(err.message).toEqual("Missing data");
+      expect(err.message).toEqual("no consent_signature");
       done();
     });
   });

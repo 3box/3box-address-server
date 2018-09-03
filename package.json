@@ -36,6 +36,7 @@
   "dependencies": {
     "aws-sdk": "^2.297.0",
     "did-jwt": "^0.0.8",
+    "eth-sig-util": "^2.0.2",
     "ethr-did-resolver": "^0.0.8",
     "muport-did-resolver": "^0.2.0",
     "pg": "^7.4.3",
