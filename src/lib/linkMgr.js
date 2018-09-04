@@ -23,7 +23,7 @@ class LinkMgr {
     try {
       await client.connect();
       const res = await client.query(
-        `INSERT INTO links(address, did, consent) VALUES ($1, $2, $3)`,
+        `INSERT INTO links(address, did, consent) VALUES ($1, $2, $3) ON CONFLICT (address) DO UPDATE SET did = EXCLUDED.did, consent = EXCLUDED.consent`,
         [address, did, consent]
       );
       return res;
