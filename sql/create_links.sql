@@ -5,9 +5,9 @@
 CREATE TABLE public.links
 (
     address VARCHAR(46) NOT NULL, --ethereum address
-    did VARCHAR(64), -- did,
+    did VARCHAR(64) NOT NULL, -- did,
     consent text,
-    CONSTRAINT links_pkey PRIMARY KEY (address,did)
+    CONSTRAINT links_pkey PRIMARY KEY (address)
 )
 WITH (
   OIDS=FALSE
