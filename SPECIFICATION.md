@@ -4,7 +4,7 @@ The implementation of this can be found at [3box-hash-server](https://github.com
 ## API Description
 
 
-### Set 
+### Set
 
 `POST /hash`
 
@@ -53,27 +53,29 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 
 ```
 {
-    consent_signature: <EIP712 signature>,
+    consent_signature: <signature>,
     linked_did: <DID>
 }
 ```
 
-The `consent_signature` is a [EIP712 signature](https://eips.ethereum.org/EIPS/eip-712) of a consent message and the DID to be linked. The data of the EIP712 signature is:
+The `consent_signature` is a [personal_sign signature](https://web3js.readthedocs.io/en/1.0/web3-eth-personal.html) of a consent message and the DID to be linked. The data(text) of the signature is:
+
 ```
-[{
-  type: 'string',
-  name: 'I consent to linking my ethereum address to my public profile',
-  value: 'did:muport:Qmsd89f7hg0w845hsdd'
-}]
+Create a new 3Box profile
+
+-
+Your unique profile ID is did:muport:Qmsd89f7hg0w845hsdd
 ```
 
-The address to be linked is recovered from the EIP712 signature.
+
+The address to be linked is recovered from the signature.
 
 #### Response
 
 | Status |     Message     |                                                   |
 |:------:|-----------------|--------------------------------------------------|
 | 200    | Ok.             | Link created and stored                           |
+| 400    | Bad request     | No did on the message or dids does not match          |
 | 401    | Invalid consent | Posted signature is invalid (signature, wrong DID, etc) |
 | 403    | Missing data    | no `consent_signature` or `linked_did`             |
 | 500    | Internal Error  | Internal Error                                    |
