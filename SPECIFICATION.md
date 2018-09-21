@@ -1,25 +1,25 @@
-# 3box-hash-server specification
-The implementation of this can be found at [3box-hash-server](https://github.com/uport-project/3box-hash-server.git)
+# 3box-address-server specification
+The implementation of this can be found at [3box-address-server](https://github.com/uport-project/3box-address-server.git)
 
 ## API Description
 
 
 ### Set
 
-`POST /hash`
+`POST /rootStoreAddress`
 
 #### Body
 
 ```
 {
-    hash_token: <jwt token containing the hash>
+    address_token: <jwt token containing the orbitDB root store address>
 }
 ```
 
-The `hash_token` is a [DID signed jwt](https://github.com/uport-project/did-jwt.git) of the hash to be published. The payload of the hash_token is:
+The `address_token` is a [DID signed jwt](https://github.com/uport-project/did-jwt.git) of the address to be published. The payload of the `address_token` is:
 ```
 {
-    hash: <ipfs hash>
+    rootStoreAddress: <orbitdb root store address>
 }
 ```
 
@@ -27,9 +27,9 @@ The `hash_token` is a [DID signed jwt](https://github.com/uport-project/did-jwt.
 
 | Status |     Message    |                                                   |
 |:------:|----------------|---------------------------------------------------|
-| 200    | Ok.            | Hash stored                           |
+| 200    | Ok.            | Adddress stored                           |
 | 401    | Invalid JWT    | Posted token is invalid (signature, expired, etc) |
-| 403    | Missing data   | no `hash` in hash_token                           |
+| 403    | Missing data   | no `address` in address                           |
 | 500    | Internal Error | Internal Error                                    |
 
 The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) standard.
@@ -39,7 +39,7 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 {
   status: 'success',
   data: {
-    hash: <the hash that was accepted>
+    rootStoreAddress: <the orbitDB root store address that was accepted>
   }
 }
 ```
@@ -68,7 +68,7 @@ Your unique profile ID is did:muport:Qmsd89f7hg0w845hsdd
 ```
 
 
-The address to be linked is recovered from the signature.
+The ethereum address to be linked is recovered from the signature.
 
 #### Response
 
@@ -88,14 +88,14 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
   status: 'success',
   data: {
     did: <the did that was linked>,
-    address: <the address that was linked>
+    address: <the ethereum address that was linked>
   }
 }
 ```
 
-### Get hash for given identity
+### Get orbitDB root store address for given identity
 
-`GET /hash/{identity}`
+`GET /rootStoreAddress/{identity}`
 
 Here the `ìdentity` is either a `DID` or an `ethereum address`.
 
@@ -103,7 +103,7 @@ Here the `ìdentity` is either a `DID` or an `ethereum address`.
 
 | Status |     Message     |                                                   |
 |:------:|-----------------|--------------------------------------------------|
-| 200    | Ok.             | A hash is returned                           |
+| 200    | Ok.             | An orbitDB is returned                           |
 | 404    | identity not found    | the DID or ethereum address was not found    |
 | 500    | Internal Error  | Internal Error                                    |
 
@@ -114,13 +114,13 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 {
   status: 'success',
   data: {
-    hash: <the hash associated with the identity>
+    rootStoreAddress: <the orbitDB root store address associated with the identity>
   }
 }
 ```
 
 
-### Delete hash
+### Delete root store address
 TBD
 
 ### Delete link
