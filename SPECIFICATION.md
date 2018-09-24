@@ -27,9 +27,9 @@ The `address_token` is a [DID signed jwt](https://github.com/uport-project/did-j
 
 | Status |     Message    |                                                   |
 |:------:|----------------|---------------------------------------------------|
-| 200    | Ok.            | Adddress stored                           |
+| 200    | Ok.            | rootStoreAddress stored                           |
 | 401    | Invalid JWT    | Posted token is invalid (signature, expired, etc) |
-| 403    | Missing data   | no `address` in address                           |
+| 403    | Missing data   | no `rootStoreAddress` in `address_token`          |
 | 500    | Internal Error | Internal Error                                    |
 
 The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) standard.
@@ -72,13 +72,13 @@ The ethereum address to be linked is recovered from the signature.
 
 #### Response
 
-| Status |     Message     |                                                   |
+| Status |     Message     |                                                  |
 |:------:|-----------------|--------------------------------------------------|
-| 200    | Ok.             | Link created and stored                           |
-| 400    | Bad request     | No did on the message or dids does not match          |
-| 401    | Invalid consent | Posted signature is invalid (signature, wrong DID, etc) |
-| 403    | Missing data    | no `consent_signature` or `linked_did`             |
-| 500    | Internal Error  | Internal Error                                    |
+| 200    | Ok.             | Link created and stored                          |
+| 400    | Bad request     | No did on the message or dids does not match     |
+| 401    | Invalid consent | Posted signature is invalid (wrong DID, etc)     |
+| 403    | Missing data    | no `consent_signature` or `linked_did`           |
+| 500    | Internal Error  | Internal Error                                   |
 
 The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) standard.
 
@@ -101,11 +101,11 @@ Here the `ìdentity` is either a `DID` or an `ethereum address`.
 
 #### Response
 
-| Status |     Message     |                                                   |
+| Status |     Message     |                                                  |
 |:------:|-----------------|--------------------------------------------------|
-| 200    | Ok.             | An orbitDB is returned                           |
-| 404    | identity not found    | the DID or ethereum address was not found    |
-| 500    | Internal Error  | Internal Error                                    |
+| 200    | Ok.             | An orbitDB address is returned                   |
+| 404    | Not found       | The DID or ethereum address was not found        |
+| 500    | Internal Error  | Internal Error                                   |
 
 The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) standard.
 
