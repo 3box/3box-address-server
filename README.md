@@ -5,6 +5,6 @@
 
 [View the Specification](./SPECIFICATION.md)
 
-**To report an issue**: Copy the [3Box issue template](https://github.com/uport-project/3box/.github/ISSUE_TEMPLATE.md) and [create a new issue in 3box-hash-server](https://github.com/uport-project/3box-hash-server/issues/new).
+[Report an issue](https://github.com/uport-project/3box-hash-server/issues/new).
 
 
