@@ -11,6 +11,9 @@ describe('RootStoreAddressPost', () => {
 
   const validToken =
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOiIxNDg1MzIxMTMzIiwicm9vdFN0b3JlQWRkcmVzcyI6Ii9vcmJpdGRiL1FtZDhUbVpyV0FTeXBFcDRFcjl0Z1dQNGtDTlFuVzRuY1Nudmp2eUhRM0VWU1UvZmlyc3QtZGF0YWJhc2UiLCJpc3MiOiJkaWQ6dXBvcnQ6Mm9zbmZKNFd5N0xCQW0yblBCWGlyZTFXZlFuNzVSclY2VHMifQ.teUclheFRoojKYNy4l7mbWF3PY1jAOpHj5hKdJHOfVxjTdr3wsd5-dPeCFIemtWxoLDhd7NAdKxk-GLR7xscIQ'
+  const invalidAudToken =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOiIxNDg1MzIxMTMzIiwicm9vdFN0b3JlQWRkcmVzcyI6Ii9vcmJpdGRiL1FtZDhUbVpyV0FTeXBFcDRFcjl0Z1dQNGtDTlFuVzRuY1Nudmp2eUhRM0VWU1UvZmlyc3QtZGF0YWJhc2UiLCJhdWQiOiJkaWQ6dXBvcnQ6Mm9zbmZKNFd5N0xCQW0yblBCWGlyZTFXZlFuNzVSclY2VHMiLCJpc3MiOiJkaWQ6dXBvcnQ6Mm9zbmZKNFd5N0xCQW0yblBCWGlyZTFXZlFuNzVSclY2VHMifQ.zOoruTDRqmjXXqlwOh260_EaLYX0BtySZLk8R0Emqxza7Xm_oB5zaxOrph9oShMaVJVBuZUactnDeevfqZMpVQ'
+
   const invalidToken =
     'eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOjE0ODUzMjExMzMsImhhcyI6IlFtV1lwelg2aG4ySmdoTlZoU1pHY01tOWRhbXJ1Nnhqd1pZWTlNcFpZcDNjcUgiLCJpc3MiOiJkaWQ6dXBvcnQ6Mm9zbmZKNFd5N0xCQW0yblBCWGlyZTFXZlFuNzVSclY2VHMifQ.EpAYedYq9IEqgGkvGyvUPsrqCKIqs98YlwpYyPKc46rlZcrJozrNog6lH4AyBW1d3ecJgdxwzq7PNzpgJFWY6A'
   beforeAll(() => {
@@ -63,6 +66,19 @@ describe('RootStoreAddressPost', () => {
         expect(err).toBeDefined()
         expect(err.code).toEqual(403)
         expect(err.message).toEqual('Missing data')
+        done()
+      }
+    )
+  })
+
+  test('handle valid token, but error decoding it', done => {
+    sut.handle(
+      { body: JSON.stringify({ address_token: invalidAudToken }) },
+      {},
+      (err, res) => {
+        expect(err).toBeDefined()
+        expect(err.code).toEqual(401)
+        expect(err.message).toEqual('Invalid JWT')
         done()
       }
     )
