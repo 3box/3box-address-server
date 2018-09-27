@@ -1,15 +1,15 @@
--- Table: public.hashes
+-- Table: public.root_store_addresses
 
--- DROP TABLE public.hashes;
+-- DROP TABLE public.root_store_addresses;
 
-CREATE TABLE public.hashes
+CREATE TABLE public.root_store_addresses
 (
-    hash VARCHAR(46) NOT NULL, --IPFS hash
+    root_store_address VARCHAR(46) NOT NULL, --OrbitDB root store address
     did VARCHAR(64), -- did
-    CONSTRAINT hashes_pkey PRIMARY KEY (did)
+    CONSTRAINT root_store_addresses_pkey PRIMARY KEY (did)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.hashes
+ALTER TABLE public.root_store_addresses
   OWNER TO root;

@@ -1,56 +1,57 @@
-import { Client } from "pg";
+import { Client } from 'pg'
 
-class HashMgr {
-  constructor() {
-    this.pgUrl = null;
+class AddressMgr {
+  constructor () {
+    this.pgUrl = null
   }
 
-  isSecretsSet() {
-    return this.pgUrl !== null;
+  isSecretsSet () {
+    return this.pgUrl !== null
   }
 
-  setSecrets(secrets) {
-    this.pgUrl = secrets.PG_URL;
+  setSecrets (secrets) {
+    this.pgUrl = secrets.PG_URL
   }
 
-  async store(hash, did) {
-    if (!hash) throw new Error("no hash");
-    if (!did) throw new Error("no did");
-    if (!this.pgUrl) throw new Error("no pgUrl set");
+  async store (rsAddress, did) {
+    if (!rsAddress) throw new Error('no root store address')
+    if (!did) throw new Error('no did')
+    if (!this.pgUrl) throw new Error('no pgUrl set')
 
-    const client = new Client({ connectionString: this.pgUrl });
+    const client = new Client({ connectionString: this.pgUrl })
     try {
-      await client.connect();
+      await client.connect()
       const res = await client.query(
-        `INSERT INTO hashes(hash, did) VALUES ($1, $2) ON CONFLICT (did) DO UPDATE SET hash = EXCLUDED.hash`,
-        [hash, did]
-      );
-      return res;
+        `INSERT INTO root_store_addresses(root_store_address, did) VALUES ($1, $2) ON CONFLICT (did) DO UPDATE SET root_store_address = EXCLUDED.root_store_address`,
+        [rsAddress, did]
+      )
+      return res
     } catch (e) {
-      throw e;
+      throw e
     } finally {
-      await client.end();
+      await client.end()
     }
   }
 
-  async get(did) {
-    if (!did) throw new Error("no did");
-    if (!this.pgUrl) throw new Error("no pgUrl set");
+  async get (did) {
+    if (!did) throw new Error('no did')
+    if (!this.pgUrl) throw new Error('no pgUrl set')
 
-    const client = new Client({ connectionString: this.pgUrl });
+    const client = new Client({ connectionString: this.pgUrl })
 
     try {
-      await client.connect();
-      const res = await client.query(`SELECT hash FROM hashes WHERE did = $1`, [
-        did
-      ]);
-      return res.rows[0];
+      await client.connect()
+      const res = await client.query(
+        `SELECT root_store_address FROM root_store_address WHERE did = $1`,
+        [did]
+      )
+      return res.rows[0]
     } catch (e) {
-      throw e;
+      throw e
     } finally {
-      await client.end();
+      await client.end()
     }
   }
 }
 
-module.exports = HashMgr;
+module.exports = AddressMgr

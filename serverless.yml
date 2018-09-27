@@ -1,4 +1,4 @@
-service: threebox-hash-server
+service: threebox-address-server
 
 provider:
   name: aws
@@ -33,21 +33,21 @@ custom:
 
 functions:
 
-  hash_post:
-    handler: src/api_handler.hash_post
+  root_store_address_post:
+    handler: src/api_handler.root_store_address_post
     timeout: 30
     events:
       - http:
-         path: hash
+         path: rootStoreAddress
          method: post
          cors: true
 
-  hash_get:
-    handler: src/api_handler.hash_get
+  root_store_address_get:
+    handler: src/api_handler.root_store_address_get
     timeout: 30
     events:
       - http:
-         path: hash/{id}
+         path: rootStoreAddress/{id}
          method: get
          cors: true
          request:
