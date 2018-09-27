@@ -12,4 +12,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.root_store_addresses
-  OWNER TO root;
+  OWNER TO threebox;

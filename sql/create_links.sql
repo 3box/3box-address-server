@@ -13,4 +13,4 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE public.links
-  OWNER TO root;
+  OWNER TO threebox;
