@@ -28,7 +28,7 @@ class RootStoreAddressGetHandler {
     }
 
     // Get rsAddress for did from db
-    const rsAddress = await this.addresMgr.get(did)
+    const rsAddress = await this.addressMgr.get(did)
     if (!rsAddress) {
       cb({ code: 404, message: 'root store address not found' })
     } else {

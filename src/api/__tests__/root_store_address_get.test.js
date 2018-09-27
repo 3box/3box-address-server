@@ -66,7 +66,7 @@ describe('RootStoreAddressGet', () => {
 
       expect(err).not.toBeNull()
       expect(err.code).toEqual(404)
-      expect(err.message).toEqual('rootStoreAddress not found')
+      expect(err.message).toEqual('root store address not found')
       done()
     })
   })

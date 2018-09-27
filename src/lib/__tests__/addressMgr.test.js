@@ -124,7 +124,7 @@ describe('AddressMgr', () => {
       expect(
         pgClientMock.query
       ).toBeCalledWith(
-        `INSERT INTO root_store_addresses(root_store_address, did) VALUES ($1, $2) ON CONFLICT (did) DO UPDATE SET root_address_token = EXCLUDED.root_address_token`,
+        `INSERT INTO root_store_addresses(root_store_address, did) VALUES ($1, $2) ON CONFLICT (did) DO UPDATE SET root_store_address = EXCLUDED.root_store_address`,
         [rsAddress, did]
       )
       expect(pgClientMock.end).toBeCalled()

@@ -42,7 +42,7 @@ class AddressMgr {
     try {
       await client.connect()
       const res = await client.query(
-        `SELECT root_store_address FROM root_store_address WHERE did = $1`,
+        `SELECT root_store_address FROM root_store_addresses WHERE did = $1`,
         [did]
       )
       return res.rows[0]
