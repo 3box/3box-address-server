@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/3box-hash-server
+    working_directory: ~/3box-address-server
     docker:
       - image: circleci/node:8.10
     steps:

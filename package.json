@@ -1,7 +1,7 @@
 {
-  "name": "3box-hash-server",
-  "version": "0.0.1",
-  "description": "Keeps track of the root hashes to the user managed data platform",
+  "name": "3box-address-server",
+  "version": "0.0.2",
+  "description": "Keeps track of the root store addresses to the user managed data platform",
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --runInBand",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uport-project/3box-hash-server.git"
+    "url": "git+https://github.com/uport-project/3box-address-server.git"
   },
   "keywords": [
     "3box",
@@ -21,9 +21,9 @@
   "author": "Cristóbal Castillo <cristobal.castillo@consensys.net>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/uport-project/3box-hash-server/issues"
+    "url": "https://github.com/uport-project/3box-address-server/issues"
   },
-  "homepage": "https://github.com/uport-project/3box-hash-server#readme",
+  "homepage": "https://github.com/uport-project/3box-addresses-server#readme",
   "devDependencies": {
     "aws-sdk-mock": "^4.1.0",
     "babel-core": "^6.26.3",
