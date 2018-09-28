@@ -38,7 +38,7 @@ functions:
     timeout: 30
     events:
       - http:
-         path: rootStoreAddress
+         path: odbAddress
          method: post
          cors: true
 
@@ -47,7 +47,7 @@ functions:
     timeout: 30
     events:
       - http:
-         path: rootStoreAddress/{id}
+         path: odbAddress/{id}
          method: get
          cors: true
          request:
