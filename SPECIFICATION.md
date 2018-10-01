@@ -1,12 +1,18 @@
 # 3box-address-server specification
 The implementation of this can be found at [3box-address-server](https://github.com/uport-project/3box-address-server.git)
 
+## API Endpoint
+
+```
+https://beta.3box.io/address-server/
+```
+
 ## API Description
 
 
 ### Set
 
-`POST /rootStoreAddress`
+`POST /odbAddress`
 
 #### Body
 
@@ -95,7 +101,7 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 
 ### Get orbitDB root store address for given identity
 
-`GET /rootStoreAddress/{identity}`
+`GET /odbAddress/{identity}`
 
 Here the `ìdentity` is either a `DID` or an `ethereum address`.
 
