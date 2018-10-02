@@ -6,7 +6,7 @@ describe('RootStoreAddressGet', () => {
   let linkMgrMock
   let address = '0xbf7571b900839fa871e6f6efbbfd238eaa502735'
   let did = 'did:muport:QmRhjfL4HLdB8LovGf1o43NJ8QnbfqmpdnTuBvZTewnuBV'
-  let rsAddress = 'QmWYpzX6hn2JghNVhSZGcMm9damru6xjwZYY9MpZYp3cqH'
+  let rsAddress = '/orbitdb/Qmd8TmZrWASypEp4Er9tgWP4kCNQnW4ncSnvjvyHQ3EVSU/first-database'
 
   beforeAll(() => {
     addressMgrMock = {
@@ -71,29 +71,27 @@ describe('RootStoreAddressGet', () => {
     })
   })
 
-  // FIX: Mocked function is not returning...
+  test('happy path (address)', done => {
+    linkMgrMock.get.mockReturnValue({ did: did })
+    addressMgrMock.get.mockReturnValue({ root_store_address: rsAddress })
 
-  test.skip('happy path (address)', done => {
     sut.handle({ pathParameters: { id: address } }, {}, (err, res) => {
-      linkMgrMock.get.mockReturnValue(did)
-      addressMgrMock.get.mockReturnValue(rsAddress)
-
       expect(linkMgrMock.get).toBeCalledWith(address)
       expect(addressMgrMock.get).toBeCalledWith(did)
 
       expect(err).toBeNull()
       expect(res).not.toBeNull()
-      expect(res.rootStoreAddress).toEqual({ rootStoreAddress: rsAddress })
+      expect(res).toEqual({ rootStoreAddress: rsAddress })
       done()
     })
   })
 
-  test.skip('happy path (did)', done => {
+  test('happy path (did)', done => {
+    addressMgrMock.get.mockReturnValue({ root_store_address: rsAddress })
+
     sut.handle({ pathParameters: { id: did } }, {}, (err, res) => {
-      addressMgrMock.get.mockReturnValue({ rootStoreAddress: rsAddress })
 
       expect(addressMgrMock.get).toBeCalledWith(did)
-
       expect(err).toBeNull()
       expect(res).not.toBeNull()
       expect(res).toEqual({ rootStoreAddress: rsAddress })

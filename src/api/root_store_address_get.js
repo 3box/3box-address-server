@@ -1,10 +1,10 @@
 class RootStoreAddressGetHandler {
-  constructor (addressMgr, linkMgr) {
+  constructor(addressMgr, linkMgr) {
     this.addressMgr = addressMgr
     this.linkMgr = linkMgr
   }
 
-  async handle (event, context, cb) {
+  async handle(event, context, cb) {
     if (!event.pathParameters || !event.pathParameters.id) {
       cb({ code: 400, message: 'no id parameter' })
       return
@@ -32,7 +32,7 @@ class RootStoreAddressGetHandler {
     if (!rsAddress) {
       cb({ code: 404, message: 'root store address not found' })
     } else {
-      cb(null, { rootStoreAddress: rsAddress.rootStoreAddress })
+      cb(null, { rootStoreAddress: rsAddress.root_store_address })
     }
   }
 }
