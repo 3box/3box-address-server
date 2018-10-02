@@ -8,3 +8,6 @@ jspm_packages
 .DS_Store
 
 coverage
+
+*.log
+*.nvmrc
