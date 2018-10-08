@@ -36,6 +36,19 @@ describe('AddressMgr', () => {
       })
   })
 
+  test('store() no pgUrl set', done => {
+    sut
+      .store(rsAddress,did)
+      .then(resp => {
+        fail("shouldn't return")
+        done()
+      })
+      .catch(err => {
+        expect(err.message).toEqual('no pgUrl set')
+        done()
+      })
+  })
+
   test('setSecrets', () => {
     expect(sut.isSecretsSet()).toEqual(false)
     sut.setSecrets({ PG_URL: 'fake' })
@@ -55,6 +68,24 @@ describe('AddressMgr', () => {
         done()
       })
   })
+
+  test('get() fail pg', done => {
+    sut.setSecrets({ PG_URL: 'fake' })
+    pgClientMock.connect = jest.fn( () =>{
+      throw new Error("pg failed");
+    })
+    sut
+      .get(did)
+      .then(resp => {
+        fail("shouldn't return")
+        done()
+      })
+      .catch(err => {
+        expect(err.message).toEqual('pg failed')
+        done()
+      })
+  })
+
 
   test('get() did', done => {
     sut.setSecrets({ PG_URL: 'fake' })
@@ -104,6 +135,23 @@ describe('AddressMgr', () => {
       })
       .catch(err => {
         expect(err.message).toEqual('no did')
+        done()
+      })
+  })
+
+  test('store() fail pg', done => {
+    sut.setSecrets({ PG_URL: 'fake' })
+    pgClientMock.connect = jest.fn( () =>{
+      throw new Error("pg failed");
+    })
+    sut
+      .store(rsAddress,did)
+      .then(resp => {
+        fail("shouldn't return")
+        done()
+      })
+      .catch(err => {
+        expect(err.message).toEqual('pg failed')
         done()
       })
   })

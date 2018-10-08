@@ -2,9 +2,15 @@ const LinkPostHandler = require('../link_post')
 
 describe('LinkPostHandler', () => {
   let sut
+  let sigMgrMock = {
+    verify: jest.fn()
+  }
+  let linkMgrMock = {
+    store: jest.fn()
+  }
 
   beforeAll(() => {
-    sut = new LinkPostHandler()
+    sut = new LinkPostHandler(sigMgrMock,linkMgrMock)
   })
 
   test('empty constructor', () => {
@@ -99,5 +105,28 @@ describe('LinkPostHandler', () => {
         done()
       }
     )
+  })
+
+  test('happy path', done => {
+    sigMgrMock.verify.mockReturnValue('0xaddr')
+
+    sut.handle(
+      {
+        body: JSON.stringify({
+          consent_signature: 'somesignature',
+          consent_msg: 'Create a new 3Box profile' +
+            '\n\n' +
+            '- \n' +
+            'Your unique profile ID is did:muport:fake',
+          linked_did: 'did:muport:fake'
+        })
+      },
+      {},
+      (err, res) => {
+        expect(err).toBeNull()
+        expect(res).not.toBeNull()
+        expect(res).toEqual({ did: 'did:muport:fake', address: '0xaddr' })
+        done()
+    })
   })
 })

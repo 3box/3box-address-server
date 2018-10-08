@@ -37,6 +37,20 @@ describe("LinkMgr", () => {
       });
   });
 
+  test('store() no pgUrl set', done => {
+    sut
+      .store(address,did,consent)
+      .then(resp => {
+        fail("shouldn't return")
+        done()
+      })
+      .catch(err => {
+        expect(err.message).toEqual('no pgUrl set')
+        done()
+      })
+  })
+
+
   test("setSecrets", () => {
     expect(sut.isSecretsSet()).toEqual(false);
     sut.setSecrets({ PG_URL: "fake" });
@@ -56,6 +70,23 @@ describe("LinkMgr", () => {
         done();
       });
   });
+
+  test('get() fail pg', done => {
+    sut.setSecrets({ PG_URL: 'fake' })
+    pgClientMock.connect = jest.fn( () =>{
+      throw new Error("pg failed");
+    })
+    sut
+      .get(address)
+      .then(resp => {
+        fail("shouldn't return")
+        done()
+      })
+      .catch(err => {
+        expect(err.message).toEqual('pg failed')
+        done()
+      })
+  })
 
   test("get() address", done => {
     sut.setSecrets({ PG_URL: "fake" });
@@ -119,6 +150,24 @@ describe("LinkMgr", () => {
         done();
       });
   });
+
+  test('store() fail pg', done => {
+    sut.setSecrets({ PG_URL: 'fake' })
+    pgClientMock.connect = jest.fn( () =>{
+      throw new Error("pg failed");
+    })
+    sut
+    sut.store(address, did, consent)
+      .then(resp => {
+        fail("shouldn't return")
+        done()
+      })
+      .catch(err => {
+        expect(err.message).toEqual('pg failed')
+        done()
+      })
+  })
+
 
   test("store() happy path", done => {
     sut.setSecrets({ PG_URL: "fake" });
