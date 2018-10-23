@@ -6,7 +6,8 @@ describe('RootStoreAddressPost', () => {
   let sut
   let uPortMgrMock = new UportMgr()
   let addressMgrMock = {
-    store: jest.fn()
+    store: jest.fn(),
+    get: (did) => false
   }
 
   const validToken =
