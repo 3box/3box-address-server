@@ -149,6 +149,7 @@ Here the `ìdentity` is either a `DID` or an `ethereum address`.
 | Status |     Message     |                                                    |
 |:------:|-----------------|----------------------------------------------------|
 | 200    | Ok.             | All or some of the orbitDB addresses are returned  |
+| 400    | Bad request     | No identities found in request                     |
 | 404    | Not found       | No matching orbitDB addresses where found          |
 | 500    | Internal Error  | Internal Error                                     |
 
@@ -159,9 +160,9 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 {
   status: 'success',
   data: {
-    rootStoreAddress: [
+    rootStoreAddresses: {
       <identity>: <the orbitDB root store address associated with the identity, or null if no match for this identity>
-    ]
+    }
   }
 }
 ```
