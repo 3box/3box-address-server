@@ -21,14 +21,17 @@ class RootStoreAddressesGetHandler {
     let resultObj = {}
     const getRootStoreFromId = async id => {
       const did = await this.getDID(id)
-      if (!did) {
-        resultObj[did] = await this.getRootStore(did)
+      if (did) {
+        const rootStoreAddress = await this.getRootStore(did)
+        if (rootStoreAddress) {
+          resultObj[id] = rootStoreAddress
+        }
       }
     }
     body.identities.forEach(id => {
       promises.push(getRootStoreFromId(id))
     })
-    await Promise.await(promises)
+    await Promise.all(promises)
     cb(null, { rootStoreAddresses: resultObj })
   }
 
@@ -59,4 +62,4 @@ class RootStoreAddressesGetHandler {
     return did
   }
 }
-module.exports = RootStoreAddressGetHandler
+module.exports = RootStoreAddressesGetHandler

@@ -134,6 +134,8 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 
 `GET /odbAddresses`
 
+Returns multiple root store addresses from multiple identities. If some identities are present but not all, the response will only contain the ones that do have root store addresses associated with them.
+
 #### Body
 
 ```
