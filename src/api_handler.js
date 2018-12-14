@@ -9,6 +9,7 @@ const SigMgr = require('./lib/sigMgr')
 
 const RootStoreAddressPostHanlder = require('./api/root_store_address_post')
 const RootStoreAddressGetHanlder = require('./api/root_store_address_get')
+const RootStoreAddressesGetHanlder = require('./api/root_store_addresses_get')
 const LinkPostHandler = require('./api/link_post')
 
 let uPortMgr = new UportMgr()
@@ -84,6 +85,11 @@ module.exports.root_store_address_post = (event, context, callback) => {
 let rsAddressGetHanlder = new RootStoreAddressGetHanlder(addressMgr, linkMgr)
 module.exports.root_store_address_get = (event, context, callback) => {
   preHandler(rsAddressGetHanlder, event, context, callback)
+}
+
+let rsAddressesGetHanlder = new RootStoreAddressesGetHanlder(addressMgr, linkMgr)
+module.exports.root_store_addresses_get = (event, context, callback) => {
+  preHandler(rsAddressesGetHanlder, event, context, callback)
 }
 
 let linkPostHandler = new LinkPostHandler(sigMgr, linkMgr)

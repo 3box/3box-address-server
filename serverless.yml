@@ -55,6 +55,15 @@ functions:
               paths:
                 id: true
 
+  root_store_addresses_get:
+    handler: src/api_handler.root_store_addresses_get
+    timeout: 30
+    events:
+      - http:
+         path: odbAddresses
+         method: get
+         cors: true
+
   link_post:
     handler: src/api_handler.link_post
     timeout: 30
