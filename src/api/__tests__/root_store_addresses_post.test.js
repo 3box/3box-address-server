@@ -1,10 +1,10 @@
-const RootStoreAddressesGet = require('../root_store_addresses_get')
+const RootStoreAddressesPost = require('../root_store_addresses_post')
 
 const formatEvent = obj => {
   return { body: JSON.stringify(obj) }
 }
 
-describe('RootStoreAddressesGet', () => {
+describe('RootStoreAddressesPost', () => {
   let sut
   let addressMgrMock
   let linkMgrMock
@@ -42,7 +42,7 @@ describe('RootStoreAddressesGet', () => {
         }
       })
     }
-    sut = new RootStoreAddressesGet(addressMgrMock, linkMgrMock)
+    sut = new RootStoreAddressesPost(addressMgrMock, linkMgrMock)
   })
 
   afterEach(() => {

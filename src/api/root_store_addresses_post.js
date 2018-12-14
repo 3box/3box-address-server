@@ -1,4 +1,4 @@
-class RootStoreAddressesGetHandler {
+class RootStoreAddressesPostHandler {
   constructor(addressMgr, linkMgr) {
     this.addressMgr = addressMgr
     this.linkMgr = linkMgr
@@ -62,4 +62,4 @@ class RootStoreAddressesGetHandler {
     return did
   }
 }
-module.exports = RootStoreAddressesGetHandler
+module.exports = RootStoreAddressesPostHandler
