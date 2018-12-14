@@ -55,7 +55,7 @@ functions:
               paths:
                 id: true
 
-  root_store_addresses_get:
+  root_store_addresses_post:
     handler: src/api_handler.root_store_addresses_post
     timeout: 30
     events:

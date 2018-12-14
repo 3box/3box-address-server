@@ -87,9 +87,9 @@ module.exports.root_store_address_get = (event, context, callback) => {
   preHandler(rsAddressGetHanlder, event, context, callback)
 }
 
-let rsAddressesGetHanlder = new RootStoreAddressesPostHanlder(addressMgr, linkMgr)
-module.exports.root_store_addresses_get = (event, context, callback) => {
-  preHandler(rsAddressesGetHanlder, event, context, callback)
+let rsAddressesPostHanlder = new RootStoreAddressesPostHanlder(addressMgr, linkMgr)
+module.exports.root_store_addresses_post = (event, context, callback) => {
+  preHandler(rsAddressesPostHanlder, event, context, callback)
 }
 
 let linkPostHandler = new LinkPostHandler(sigMgr, linkMgr)
