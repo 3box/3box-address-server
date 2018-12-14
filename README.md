@@ -132,7 +132,7 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 
 ### Get multiple orbitDB root store addresses for given identities
 
-`GET /odbAddresses`
+`Post /odbAddresses`
 
 Returns multiple root store addresses from multiple identities. If some identities are present but not all, the response will only contain the ones that do have root store addresses associated with them.
 
@@ -168,4 +168,3 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
   }
 }
 ```
-
