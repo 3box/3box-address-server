@@ -61,20 +61,22 @@ const doHandler = (handler, event, context, callback) => {
 
 const preHandler = (handler, event, context, callback) => {
   // console.log(event)
-  if (!addressMgr.isSecretsSet() || !linkMgr.isSecretsSet()) {
-    const kms = new AWS.KMS()
-    kms
-      .decrypt({ CiphertextBlob: Buffer(process.env.SECRETS, 'base64') })
-      .promise()
-      .then(data => {
-        const decrypted = String(data.Plaintext)
-        addressMgr.setSecrets(JSON.parse(decrypted))
-        linkMgr.setSecrets(JSON.parse(decrypted))
-        doHandler(handler, event, context, callback)
-      })
-  } else {
+  // if (!addressMgr.isSecretsSet() || !linkMgr.isSecretsSet()) {
+    // const kms = new AWS.KMS()
+    // kms
+    //   .decrypt({ CiphertextBlob: Buffer(process.env.SECRETS, 'base64') })
+    //   .promise()
+    //   .then(data => {
+    //     console.log('did aws thing')
+    //     const decrypted = String(data.Plaintext)
+        // const secret = {PG_URL: process.env.PG_URL}
+        // addressMgr.setSecrets(secret)
+        // linkMgr.setSecrets(secret)
+        // doHandler(handler, event, context, callback)
+      // })
+  // } else {
     doHandler(handler, event, context, callback)
-  }
+  // }
 }
 
 let rsAddressPostHanlder = new RootStoreAddressPostHanlder(uPortMgr, addressMgr)

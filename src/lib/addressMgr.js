@@ -16,9 +16,9 @@ class AddressMgr {
   async store (rsAddress, did) {
     if (!rsAddress) throw new Error('no root store address')
     if (!did) throw new Error('no did')
-    if (!this.pgUrl) throw new Error('no pgUrl set')
+    // if (!this.pgUrl) throw new Error('no pgUrl set')
 
-    const client = new Client({ connectionString: this.pgUrl })
+    const client = new Client()
     try {
       await client.connect()
       const res = await client.query(
@@ -35,9 +35,9 @@ class AddressMgr {
 
   async get (did) {
     if (!did) throw new Error('no did')
-    if (!this.pgUrl) throw new Error('no pgUrl set')
+    // if (!this.pgUrl) throw new Error('no pgUrl set')
 
-    const client = new Client({ connectionString: this.pgUrl })
+    const client = new Client()
 
     try {
       await client.connect()

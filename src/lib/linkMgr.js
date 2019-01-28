@@ -17,9 +17,9 @@ class LinkMgr {
     if (!address) throw new Error("no address");
     if (!did) throw new Error("no did");
     if (!consent) throw new Error("no consent");
-    if (!this.pgUrl) throw new Error("no pgUrl set");
+    // if (!this.pgUrl) throw new Error("no pgUrl set");
 
-    const client = new Client({ connectionString: this.pgUrl });
+    const client = new Client()
     try {
       await client.connect();
       const res = await client.query(
@@ -36,9 +36,9 @@ class LinkMgr {
 
   async get(address) {
     if (!address) throw new Error("no address");
-    if (!this.pgUrl) throw new Error("no pgUrl set");
+    // if (!this.pgUrl) throw new Error("no pgUrl set");
 
-    const client = new Client({ connectionString: this.pgUrl });
+    const client = new Client();
 
     try {
       await client.connect();
