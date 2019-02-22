@@ -44,7 +44,7 @@
     "serverless-kms-secrets": "^1.0.3",
     "serverless-offline": "^3.25.10",
     "serverless-webpack": "^5.2.0",
-    "uport-did-resolver": "^0.0.3",
+    "uport-did-resolver": "^0.0.5",
     "webpack": "^4.26.1",
     "webpack-node-externals": "^1.6.0"
   },
