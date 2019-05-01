@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uport-project/3box-address-server.git"
+    "url": "git+https://github.com/3box/3box-address-server.git"
   },
   "keywords": [
     "3box",
@@ -21,9 +21,9 @@
   "author": "Cristóbal Castillo <cristobal.castillo@consensys.net>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/uport-project/3box-address-server/issues"
+    "url": "https://github.com/3box/3box-address-server/issues"
   },
-  "homepage": "https://github.com/uport-project/3box-addresses-server#readme",
+  "homepage": "https://github.com/3box/3box-addresses-server#readme",
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "aws-sdk-mock": "^4.1.0",
