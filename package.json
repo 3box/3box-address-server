@@ -29,7 +29,7 @@
     "aws-sdk-mock": "^4.1.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.4.2",
-    "babel-loader": "^8.0.4",
+    "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
     "jest": "^23.6.0",
     "mockdate": "^2.0.2"
