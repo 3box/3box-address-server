@@ -1,6 +1,7 @@
 # 3Box Address Server
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/3box/3box-address-server.svg)](https://greenkeeper.io/)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2F3box%2F3box-address-server.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2F3box%2F3box-address-server?ref=badge_shield)
 
 `3box-address-server` is a server utilizing a REST-API that is used to associate an Ethereum address with its root OrbitDB address. This is what must be looked up to sync the user's data.
 
@@ -168,3 +169,7 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
   }
 }
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2F3box%2F3box-address-server.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2F3box%2F3box-address-server?ref=badge_large)
