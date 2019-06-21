@@ -53,6 +53,26 @@ class LinkMgr {
       await client.end();
     }
   }
+
+  async remove(address) {
+    if (!address) throw new Error("no address");
+    if (!this.pgUrl) throw new Error("no pgUrl set");
+
+    const client = new Client({ connectionString: this.pgUrl });
+
+    try {
+      await client.connect();
+      const res = await client.query(
+        `DELETE FROM links WHERE address = $1`,
+        [address]
+      );
+      return res;
+    } catch (e) {
+      throw e;
+    } finally {
+      await client.end();
+    }
+  }
 }
 
 module.exports = LinkMgr;
