@@ -103,6 +103,46 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 }
 ```
 
+### Delete a link between an ethereum address and a DID
+
+`POST /linkdelete`
+
+#### Body
+
+```
+{
+  delete_token: <jwt token>
+}
+```
+
+The `delete_token` is a [DID signed jwt](https://github.com/uport-project/did-jwt.git) with a 1 hour expiry, of the address to be deleted. The payload of the `delete_token` is:
+
+```
+{
+  "address": "0x19bd82476fa8799e0eb7bbb03ee2a67678c01cdc",
+  "type": "delete-address-link"
+}
+```
+
+#### Response
+
+| Status |     Message     |                                                  |
+|:------:|-----------------|--------------------------------------------------|
+| 200    | Ok.             | Link deleted                                     |
+| 401    | Invalid consent | delete token failed verification                 |
+| 403    | Missing data    | no delete_token                                  |
+| 500    | Internal Error  | Internal Error                                   |
+
+The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) standard.
+
+#### Response data
+```
+{
+  status: 'success',
+  data: 'address of link deleted'
+}
+```
+
 ### Get orbitDB root store address for given identity
 
 `GET /odbAddress/{identity}`

@@ -72,3 +72,12 @@ functions:
          path: link
          method: post
          cors: true
+
+  link_delete:
+    handler: src/api_handler.link_delete
+    timeout: 30
+    events:
+      - http:
+         path: linkdelete
+         method: post
+         cors: true

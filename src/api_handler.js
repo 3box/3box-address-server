@@ -11,6 +11,7 @@ const RootStoreAddressPostHanlder = require('./api/root_store_address_post')
 const RootStoreAddressGetHanlder = require('./api/root_store_address_get')
 const RootStoreAddressesPostHanlder = require('./api/root_store_addresses_post')
 const LinkPostHandler = require('./api/link_post')
+const LinkDeleteHandler = require('./api/link_delete')
 
 let uPortMgr = new UportMgr()
 let sigMgr = new SigMgr()
@@ -95,4 +96,9 @@ module.exports.root_store_addresses_post = (event, context, callback) => {
 let linkPostHandler = new LinkPostHandler(sigMgr, linkMgr)
 module.exports.link_post = (event, context, callback) => {
   preHandler(linkPostHandler, event, context, callback)
+}
+
+let linkDeleteHandler = new LinkDeleteHandler(uPortMgr, linkMgr)
+module.exports.link_delete = (event, context, callback) => {
+  preHandler(linkDeleteHandler, event, context, callback)
 }
