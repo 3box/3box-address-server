@@ -32,7 +32,7 @@ class RootStoreAddressGetHandler {
     if (!rsAddress) {
       cb({ code: 404, message: 'root store address not found' })
     } else {
-      cb(null, { rootStoreAddress: rsAddress.root_store_address })
+      cb(null, { rootStoreAddress: rsAddress.root_store_address, did })
     }
   }
 }

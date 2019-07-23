@@ -81,7 +81,7 @@ describe('RootStoreAddressGet', () => {
 
       expect(err).toBeNull()
       expect(res).not.toBeNull()
-      expect(res).toEqual({ rootStoreAddress: rsAddress })
+      expect(res).toEqual({ rootStoreAddress: rsAddress, did })
       done()
     })
   })
@@ -94,7 +94,7 @@ describe('RootStoreAddressGet', () => {
       expect(addressMgrMock.get).toBeCalledWith(did)
       expect(err).toBeNull()
       expect(res).not.toBeNull()
-      expect(res).toEqual({ rootStoreAddress: rsAddress })
+      expect(res).toEqual({ rootStoreAddress: rsAddress, did })
       done()
     })
   })
