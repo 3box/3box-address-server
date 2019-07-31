@@ -32,7 +32,7 @@
     "babel-loader": "^8.0.4",
     "babel-preset-env": "^1.7.0",
     "jest": "^24.8.0",
-    "mockdate": "^2.0.2"
+    "mockdate": "^2.0.4"
   },
   "dependencies": {
     "aws-sdk": "^2.297.0",
