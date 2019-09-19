@@ -1,10 +1,40 @@
 const isIPFS = require('is-ipfs')
 
+const ACCOUNT_TYPES = {
+  ethereum: 'ethereum',
+  ethereumEOA: 'ethereum-eoa',
+  erc1271: 'erc1271'
+}
+
+const SUPPORTED_CHAINS = {
+  1: 'mainnet',
+  3: 'ropsten',
+  4: 'rinkeby',
+  42: 'kovan',
+  5: 'goerli'
+}
+
 // valid 3 DID or muport DID
 const isValidDID = did => {
   const parts = did.split(':')
   if (!parts[0] === 'did' || !(parts[1] === '3' || parts[1] === 'muport')) return false
   return isIPFS.cid(parts[2])
+}
+
+const isValidAccountType = type => {
+  return Object.values(ACCOUNT_TYPES).includes(type)
+}
+
+const isSupportedChainId = chainId => {
+  return chainId && !!SUPPORTED_CHAINS[chainId]
+}
+
+const isValidTimestamp = timestamp => {
+  return parseInt(timestamp, 10) > 0 && parseInt(timestamp, 10) <= +new Date()
+}
+
+const isValidSignature = async (contractAddress, chainId, sig, msg) => {
+  // TODO: add validator here
 }
 
 class LinkPostHandler {
@@ -34,13 +64,22 @@ class LinkPostHandler {
       return
     }
 
-    let {msg, sig, did } = await handlers[version](body, cb)
+    let {
+      msg,
+      sig,
+      did,
+      type,
+      chainId,
+      contractAddress,
+      timestamp,
+    } = await handlers[version](body, cb)
 
-    // Get address from sigsignature + msg
+    // Get address from signature + msg
     const address = await this.sigMgr.verify(msg, sig)
     const consent = JSON.stringify({ msg, sig })
 
-    await this.linkMgr.store(address, did, consent)
+    // TODO: add support for new db fields
+    await this.linkMgr.store(address, did, consent, type, chainId, contractAddress, timestamp)
 
     cb(null, { did: did, address: address })
   }
@@ -77,7 +116,15 @@ class LinkPostHandler {
       return
     }
 
-    return {msg, sig, did}
+    return {
+      msg,
+      sig,
+      did,
+      type: ACCOUNT_TYPES.ethereumEOA,
+      chainId: null,
+      contractAddress: null,
+      timestamp: null
+    }
   }
 
   async v1Handler(body, cb) {
@@ -93,6 +140,10 @@ class LinkPostHandler {
 
     const sig = body.signature
     const msg = body.message
+    const type = body.type
+    const chainId = body.chainId
+    const address = body.address
+    const timestamp = body.timestamp
 
     const regex = /(did:\S+)/
 
@@ -101,10 +152,42 @@ class LinkPostHandler {
       cb({ code: 400, message: 'no valid did in the consent_msg' })
       return
     }
-
     const did = didMatch[0]
 
-    return {msg, sig, did}
+    if (!!chainId && !isSupportedChainId(chainId)) {
+      cb({ code: 400, message: 'unsupported chainId provided' })
+      return
+    }
+
+    if (!!type && !isValidAccountType(type)) {
+      cb({ code: 400, message: 'unsupported type provided' })
+      return
+    }
+
+    if (type === ACCOUNT_TYPES.erc1271 && !address) {
+      cb({ code: 403, message: 'no address' })
+      return
+    }
+
+    if (type === ACCOUNT_TYPES.erc1271 && !(await isValidSignature(address, chainId, sig, msg))) {
+      cb({ code: 400, message: 'invalid signature provided' })
+      return
+    }
+
+    if (!!timestamp && !isValidTimestamp(timestamp)) {
+      cb({ code: 400, message: 'invalid timestamp provided' })
+      return
+    }
+
+    return {
+      msg,
+      sig,
+      did,
+      type: type || ACCOUNT_TYPES.ethereumEOA,
+      chainId: chainId || null,
+      contractAddress: address || null,
+      timestamp: timestamp || null
+    }
   }
 }
 module.exports = LinkPostHandler
