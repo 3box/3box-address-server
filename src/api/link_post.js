@@ -1,4 +1,5 @@
 const isIPFS = require('is-ipfs')
+const ethers = require('ethers')
 
 const ACCOUNT_TYPES = {
   ethereum: 'ethereum',
@@ -7,12 +8,14 @@ const ACCOUNT_TYPES = {
 }
 
 const SUPPORTED_CHAINS = {
-  1: 'mainnet',
+  1: 'homestead',
   3: 'ropsten',
   4: 'rinkeby',
   42: 'kovan',
   5: 'goerli'
 }
+
+const MAGIC_ERC1271_VALUE = '0x20c13b0b'
 
 // valid 3 DID or muport DID
 const isValidDID = did => {
@@ -34,7 +37,16 @@ const isValidTimestamp = timestamp => {
 }
 
 const isValidSignature = async (contractAddress, chainId, sig, msg) => {
-  // TODO: add validator here
+  const abi = [
+    'function isValidSignature(bytes _messageHash, bytes _signature) public view returns (bytes4 magicValue)'
+  ]
+  const network = SUPPORTED_CHAINS[chainId]
+  const ethersProvider = ethers.getDefaultProvider(network)
+  const contract = new ethers.Contract(contractAddress, abi, ethersProvider)
+  const message = '0x' + Buffer.from(msg, 'utf8').toString('hex')
+  const returnValue = await contract.isValidSignature(message, sig)
+
+  return returnValue === MAGIC_ERC1271_VALUE
 }
 
 class LinkPostHandler {
