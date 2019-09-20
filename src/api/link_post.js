@@ -29,7 +29,7 @@ const isValidAccountType = type => {
 }
 
 const isSupportedChainId = chainId => {
-  return chainId && !!SUPPORTED_CHAINS[chainId]
+  return chainId && Boolean(SUPPORTED_CHAINS[chainId])
 }
 
 const isValidTimestamp = timestamp => {
@@ -165,18 +165,18 @@ class LinkPostHandler {
     }
     const did = didMatch[0]
 
-    if (!!chainId && !isSupportedChainId(chainId)) {
+    if (Boolean(chainId) && !isSupportedChainId(chainId)) {
       cb({ code: 400, message: 'unsupported chainId provided' })
       return
     }
 
-    if (!!type && !isValidAccountType(type)) {
+    if (Boolean(type) && !isValidAccountType(type)) {
       cb({ code: 400, message: 'unsupported type provided' })
       return
     }
 
     if (type === ACCOUNT_TYPES.erc1271 && !address) {
-      cb({ code: 403, message: 'no address' })
+      cb({ code: 403, message: 'Parameter "address" needed for type erc1271' })
       return
     }
 
@@ -185,7 +185,7 @@ class LinkPostHandler {
       return
     }
 
-    if (!!timestamp && !isValidTimestamp(timestamp)) {
+    if (Boolean(timestamp) && !isValidTimestamp(timestamp)) {
       cb({ code: 400, message: 'invalid timestamp provided' })
       return
     }
