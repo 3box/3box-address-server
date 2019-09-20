@@ -64,7 +64,11 @@ The response data follows the [`jsend`](https://labs.omniti.com/labs/jsend) stan
 {
     consent_signature: <signature>,
     linked_did: <DID>,
-    consent_msg: <string-message>
+    consent_msg: <string-message>,
+    type: <string-[ethereum-eoa, erc1271]>,
+    chainId: <int>,
+    address: <string-smart account address>,
+    timestamp: <int-unix timestamp>
 }
 ```
 
