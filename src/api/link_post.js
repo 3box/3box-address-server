@@ -90,7 +90,6 @@ class LinkPostHandler {
     const address = await this.sigMgr.verify(msg, sig)
     const consent = JSON.stringify({ msg, sig })
 
-    // TODO: add support for new db fields
     await this.linkMgr.store(address, did, consent, type, chainId, contractAddress, timestamp)
 
     cb(null, { did: did, address: address })
