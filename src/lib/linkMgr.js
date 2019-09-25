@@ -13,7 +13,7 @@ class LinkMgr {
     this.pgUrl = secrets.PG_URL;
   }
 
-  async store(address, did, consent) {
+  async store(address, did, consent, type, chainId, contractAddress, timestamp) {
     if (!address) throw new Error("no address");
     if (!did) throw new Error("no did");
     if (!consent) throw new Error("no consent");
@@ -23,8 +23,10 @@ class LinkMgr {
     try {
       await client.connect();
       const res = await client.query(
-        `INSERT INTO links(address, did, consent) VALUES ($1, $2, $3) ON CONFLICT (address) DO UPDATE SET did = EXCLUDED.did, consent = EXCLUDED.consent`,
-        [address, did, consent]
+        `INSERT INTO links(address, did, consent, type, chainId, contractAddress, timestamp)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            ON CONFLICT (address) DO UPDATE SET did = EXCLUDED.did, consent = EXCLUDED.consent`,
+        [address, did, consent, type, chainId, contractAddress, timestamp]
       );
       return res;
     } catch (e) {
