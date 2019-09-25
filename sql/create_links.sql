@@ -10,7 +10,7 @@ CREATE TABLE public.links
     type VARCHAR(64), -- account type(ethereum-eoa, erc1271)
     chainId VARCHAR(30),
     contractAddress VARCHAR(46),
-    timestamp INT(11) unsigned NOT NULL DEFAULT 0,
+    timestamp INT NOT NULL DEFAULT 0,
     CONSTRAINT links_pkey PRIMARY KEY (address)
 )
 WITH (
