@@ -5,7 +5,7 @@
 CREATE TABLE public.links
 (
     address VARCHAR(46) NOT NULL, -- ethereum address
-    did VARCHAR(64) NOT NULL, -- did,
+    did VARCHAR(100) NOT NULL, -- did,
     consent text,
     type VARCHAR(64), -- account type(ethereum-eoa, erc1271)
     chainId VARCHAR(30),
