@@ -1,12 +1,10 @@
 import { verifyJWT } from "did-jwt";
-import { initIPFS } from "./ipfs-fs-to-s3-datastore.js"
+import { initIPFS } from "ipfs-s3-dag-get"
 const register3idResolver = require('3id-resolver')
 const registerMuPortResolver = require("muport-did-resolver")
-const registerUPortResolver = require("uport-did-resolver")
 
 // Register resolvers
 function register (ipfs) {
-  registerUPortResolver()
   register3idResolver(ipfs)
   registerMuPortResolver(ipfs)
 }
