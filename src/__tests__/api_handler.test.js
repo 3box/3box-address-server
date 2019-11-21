@@ -4,6 +4,12 @@ MockAWS.setSDKInstance(AWS)
 
 const apiHandler = require('../api_handler')
 
+jest.mock('ipfs-s3-dag-get', () => {
+  return {
+    initIPFS: () => 'ipfs'
+  }
+})
+
 describe('apiHandler', () => {
   beforeAll(() => {
     MockAWS.mock('KMS', 'decrypt', Promise.resolve({ Plaintext: '{}' }))

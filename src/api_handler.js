@@ -60,17 +60,27 @@ const doHandler = (handler, event, context, callback) => {
   })
 }
 
+// Allow env vars to overwrite KMS
+const envConfig = {}
+if (process.env.PG_URL) envConfig['PG_URL'] = process.env.PG_URL
+if (process.env.IPFS_PATH) envConfig['IPFS_PATH'] = process.env.IPFS_PATH
+if (process.env.AWS_BUCKET_NAME) envConfig['AWS_BUCKET_NAME'] = process.env.AWS_BUCKET_NAME
+if (process.env.AWS_ACCESS_KEY_ID) envConfig['AWS_ACCESS_KEY_ID'] = process.env.AWS_ACCESS_KEY_ID
+if (process.env.AWS_SECRET_ACCESS_KEY) envConfig['AWS_SECRET_ACCESS_KEY'] = process.env.AWS_SECRET_ACCESS_KEY
+
 const preHandler = (handler, event, context, callback) => {
-  // console.log(event)
-  if (!addressMgr.isSecretsSet() || !linkMgr.isSecretsSet()) {
+  if (!addressMgr.isSecretsSet() || !linkMgr.isSecretsSet() || uPortMgr.isSecretsSet()) {
     const kms = new AWS.KMS()
     kms
       .decrypt({ CiphertextBlob: Buffer(process.env.SECRETS, 'base64') })
       .promise()
       .then(data => {
         const decrypted = String(data.Plaintext)
-        addressMgr.setSecrets(JSON.parse(decrypted))
-        linkMgr.setSecrets(JSON.parse(decrypted))
+        const config = Object.assign(JSON.parse(decrypted), envConfig)
+        addressMgr.setSecrets(config)
+        linkMgr.setSecrets(config)
+        return uPortMgr.setSecrets(config)
+      }).then(res => {
         doHandler(handler, event, context, callback)
       })
   } else {
