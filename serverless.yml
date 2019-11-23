@@ -2,7 +2,7 @@ service: threebox-address-server
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs10.x
   stage: develop
   region: us-west-2
   iamRoleStatements:
@@ -17,6 +17,8 @@ provider:
 
   environment:
       SECRETS: ${self:custom.kmsSecrets.secrets.SECRETS}
+      IPFS_PATH: /ipfs
+      AWS_BUCKET_NAME: ipfs-bucket-test.3box.io
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:

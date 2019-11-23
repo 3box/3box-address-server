@@ -17,9 +17,7 @@ class UportMgr {
   async setSecrets(secrets) {
     const config = {
       ipfsPath: secrets.IPFS_PATH,
-      bucket: secrets.AWS_BUCKET_NAME,
-      accessKeyId: secrets.AWS_ACCESS_KEY_ID,
-      secretAccessKey: secrets.AWS_SECRET_ACCESS_KEY
+      bucket: secrets.AWS_BUCKET_NAME
     }
     this.ipfs = await initIPFS(config)
     register(this.ipfs)

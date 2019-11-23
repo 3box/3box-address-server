@@ -32,23 +32,26 @@
     "babel-loader": "^8.0.4",
     "babel-preset-env": "^1.7.0",
     "jest": "^24.8.0",
-    "mockdate": "^2.0.2"
-  },
-  "dependencies": {
-    "3id-resolver": "0.0.6",
-    "aws-sdk": "^2.297.0",
-    "did-jwt": "^0.2.0",
-    "eth-sig-util": "^2.0.2",
-    "ethers": "^4.0.37",
-    "ipfs-s3-dag-get": "^0.1.2",
-    "is-ipfs": "^0.6.1",
-    "muport-did-resolver": "^0.3.0",
-    "pg": "^7.4.3",
+    "mockdate": "^2.0.2",
     "serverless-kms-secrets": "^1.0.3",
     "serverless-offline": "^5.10.1",
     "serverless-webpack": "^5.2.0",
     "webpack": "^4.26.1",
     "webpack-node-externals": "^1.6.0"
+  },
+  "dependencies": {
+    "3id-resolver": "^0.0.5",
+    "aws-sdk": "^2.574.0",
+    "cids": "0.7.1",
+    "did-jwt": "^0.2.0",
+    "did-resolver": "0.0.6",
+    "eth-sig-util": "^2.0.2",
+    "ethers": "^4.0.37",
+    "ipfs-s3-dag-get": "^0.1.10",
+    "is-ipfs": "^0.6.1",
+    "js-sha256": "^0.9.0",
+    "muport-did-resolver": "^0.3.0",
+    "pg": "^7.4.3"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
