@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UportMgr should verify 3id JWT correctly 1`] = `
+Object {
+  "doc": Object {
+    "@context": "https://w3id.org/did/v1",
+    "authentication": Array [
+      Object {
+        "publicKey": "did:3:bafyreifhpmpwpwmjhd64vcsc35fsgjgpdrqqdnsyjv45ggbzn3l5m4feda#signingKey",
+        "type": "Secp256k1SignatureAuthentication2018",
+      },
+    ],
+    "id": "did:3:bafyreifhpmpwpwmjhd64vcsc35fsgjgpdrqqdnsyjv45ggbzn3l5m4feda",
+    "publicKey": Array [
+      Object {
+        "id": "did:3:bafyreifhpmpwpwmjhd64vcsc35fsgjgpdrqqdnsyjv45ggbzn3l5m4feda#signingKey",
+        "publicKeyHex": "04113970c9f2818bf183ee0cce54446fce4f6e1303d5b0d380ec95b5cf97e2f866403a204a0fda234f132a437ee0c56bd2a44dff661d8546dcb4132930ed36907a",
+        "type": "Secp256k1VerificationKey2018",
+      },
+      Object {
+        "id": "did:3:bafyreifhpmpwpwmjhd64vcsc35fsgjgpdrqqdnsyjv45ggbzn3l5m4feda#encryptionKey",
+        "publicKeyBase64": "somakoiV8ZenByzOhk2Z6jxM2WCHtPB6KoPKj26YMFM=",
+        "type": "Curve25519EncryptionPublicKey",
+      },
+      Object {
+        "ethereumAddress": "0x456bf7002f2377798ef546fb7a0D0eE6155E02e5",
+        "id": "did:3:bafyreifhpmpwpwmjhd64vcsc35fsgjgpdrqqdnsyjv45ggbzn3l5m4feda#managementKey",
+        "type": "Secp256k1VerificationKey2018",
+      },
+    ],
+  },
+  "issuer": "did:3:bafyreifhpmpwpwmjhd64vcsc35fsgjgpdrqqdnsyjv45ggbzn3l5m4feda",
+  "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NksifQ.eyJpYXQiOjE1NzQ2NzIyNTQsInJvb3RTdG9yZUFkZHJlc3MiOiIvb3JiaXRkYi9RbVNQS2lGaWQxdGRKWlhKcEptY2RNYm9ZakhiaDM0VGM5cTM4VTJvNlc4Z0VDLzEyMjBkNjE2NjljNzU5MGQ1MjI2NDU1MjIzNGMwOWM3ZmRmZTM3MTlmNDg3NjhkMGU0ZmNiNzA2YmJhYTg4YzQ4OGI0LnJvb3QiLCJpc3MiOiJkaWQ6MzpiYWZ5cmVpZmhwbXB3cHdtamhkNjR2Y3NjMzVmc2dqZ3BkcnFxZG5zeWp2NDVnZ2J6bjNsNW00ZmVkYSJ9.PG4U6Awwu-VCMDS12hnGeJ1Zop2cyL-LbXJnZGVgYsxZzTCmfrz-uNlMbRZ2r0al4WQg-dMGN6FgSNWmqEIPMQ",
+  "payload": Object {
+    "iat": 1574672254,
+    "iss": "did:3:bafyreifhpmpwpwmjhd64vcsc35fsgjgpdrqqdnsyjv45ggbzn3l5m4feda",
+    "rootStoreAddress": "/orbitdb/QmSPKiFid1tdJZXJpJmcdMboYjHbh34Tc9q38U2o6W8gEC/1220d61669c7590d52264552234c09c7fdfe3719f48768d0e4fcb706bbaa88c488b4.root",
+  },
+  "signer": Object {
+    "id": "did:3:bafyreifhpmpwpwmjhd64vcsc35fsgjgpdrqqdnsyjv45ggbzn3l5m4feda#signingKey",
+    "publicKeyHex": "04113970c9f2818bf183ee0cce54446fce4f6e1303d5b0d380ec95b5cf97e2f866403a204a0fda234f132a437ee0c56bd2a44dff661d8546dcb4132930ed36907a",
+    "type": "Secp256k1VerificationKey2018",
+  },
+}
+`;
