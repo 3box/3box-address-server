@@ -208,4 +208,22 @@ describe('RootStoreAddressesPost', () => {
       done()
     })
   })
+
+  test('happy path (mixed dids, addresses, upper-case addresses)', done => {
+    sut.handle(formatEvent({ identities: [address1, '0xBF7571b900839fa871e6f6efbbfd238eaa502736', did3, did4] }), {}, (err, res) => {
+      expect(linkMgrMock.get).toHaveBeenCalledWith(address1)
+      expect(linkMgrMock.get).toHaveBeenCalledTimes(1)
+      expect(addressMgrMock.get).toHaveBeenCalledWith(did1)
+      expect(addressMgrMock.get).toHaveBeenCalledWith(did3)
+      expect(addressMgrMock.get).toHaveBeenCalledWith(did4)
+      expect(addressMgrMock.get).toHaveBeenCalledTimes(3)
+      expect(err).toBeNull()
+      const expectedRes = { rootStoreAddresses: {} }
+      expectedRes.rootStoreAddresses[address1] = rsAddress1
+      expectedRes.rootStoreAddresses[did3] = rsAddress3
+      expectedRes.rootStoreAddresses[did4] = rsAddress4
+      expect(res).toEqual(expectedRes)
+      done()
+    })
+  })
 })
