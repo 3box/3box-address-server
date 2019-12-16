@@ -71,6 +71,19 @@ describe('RootStoreAddressGet', () => {
     })
   })
 
+  test('adress contains uppercase', done => {
+    let invalidAddress = '0xBF7571b900839fa871e6f6efbbfd238eaa502735'
+    linkMgrMock.get.mockReturnValue({ did: did })
+    addressMgrMock.get.mockReturnValue({ root_store_address: rsAddress })
+
+    sut.handle({ pathParameters: { id: invalidAddress } }, {}, (err, res) => {
+      expect(err).not.toBeNull()
+      expect(err.code).toEqual(403)
+      expect(err.message).toEqual('Error: must be a lowercase hex string')
+      done()
+    })
+  })
+
   test('happy path (address)', done => {
     linkMgrMock.get.mockReturnValue({ did: did })
     addressMgrMock.get.mockReturnValue({ root_store_address: rsAddress })

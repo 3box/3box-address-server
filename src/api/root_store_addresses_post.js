@@ -1,3 +1,5 @@
+const { hexString } = require('../lib/validator')
+
 class RootStoreAddressesPostHandler {
   constructor(addressMgr, linkMgr) {
     this.addressMgr = addressMgr
@@ -49,6 +51,10 @@ class RootStoreAddressesPostHandler {
     // Check if id is an address or a did
     let did
     if (id.startsWith('0x')) {
+      const { error } = hexString.validate(id)
+      if (error) {
+        return null
+      }
       const didRow = await this.linkMgr.get(id)
       if (!didRow) {
         return null

@@ -183,8 +183,10 @@ describe("LinkMgr", () => {
       expect(pgClientMock.connect).toBeCalled();
       expect(pgClientMock.query).toBeCalled();
       expect(pgClientMock.query).toBeCalledWith(
-        `INSERT INTO links(address, did, consent) VALUES ($1, $2, $3) ON CONFLICT (address) DO UPDATE SET did = EXCLUDED.did, consent = EXCLUDED.consent`,
-        [address, did, consent]
+        `INSERT INTO links(address, did, consent, type, chainId, contractAddress, timestamp)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
+            ON CONFLICT (address) DO UPDATE SET did = EXCLUDED.did, consent = EXCLUDED.consent`,
+        [address, did, consent, undefined, undefined, undefined, undefined]
       );
       expect(pgClientMock.end).toBeCalled();
       expect(resp).toBeTruthy();

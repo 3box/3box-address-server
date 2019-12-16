@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/3box-address-server
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:10
     steps:
       - checkout
 

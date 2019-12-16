@@ -3,8 +3,8 @@ service: threebox-address-server
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: develop
-  region: us-west-2
+  stage: ${opt:stage, 'develop'}
+  region: ${opt:region, 'us-west-2'}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -18,7 +18,7 @@ provider:
   environment:
       SECRETS: ${self:custom.kmsSecrets.secrets.SECRETS}
       IPFS_PATH: /ipfs
-      AWS_BUCKET_NAME: ipfs-bucket-test.3box.io
+      AWS_BUCKET_NAME: ${self:custom.awsBucketName.${self:provider.stage}}
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
@@ -28,10 +28,13 @@ plugins:
 
 # Enable auto-packing of external modules
 custom:
+  awsBucketName:
+    develop: ipfs-dev.3box.io
+    master: ipfs-bucket-test.3box.io
   webpackIncludeModules: true
   serverless-kms-secrets:
-    secretsFile: kms-secrets.${opt:stage, self:provider.stage}.${opt:region, self:provider.region}.yml
-  kmsSecrets: ${file(kms-secrets.${opt:stage, self:provider.stage}.${opt:region, self:provider.region}.yml)}
+    secretsFile: kms-secrets.${self:provider.stage}.${self:provider.region}.yml
+  kmsSecrets: ${file(kms-secrets.${self:provider.stage}.${self:provider.region}.yml)}
   contentCompression: 1024
   serverless-offline:
       host: 0.0.0.0
