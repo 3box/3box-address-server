@@ -60,26 +60,50 @@ const doHandler = (handler, event, context, callback) => {
   })
 }
 
-// Allow env vars to overwrite KMS
-const envConfig = {}
-if (process.env.PG_URL) envConfig['PG_URL'] = process.env.PG_URL
-if (process.env.IPFS_PATH) envConfig['IPFS_PATH'] = process.env.IPFS_PATH
-if (process.env.AWS_BUCKET_NAME) envConfig['AWS_BUCKET_NAME'] = process.env.AWS_BUCKET_NAME
+const pick = (obj, keys) => {
+  return keys.reduce((acc, key) => {
+    if (key in obj) acc[key] = obj[key]
+    return acc
+  }, {})
+}
+
+// Get config values from environment if set
+const configKeys = [
+  'PG_URL',
+  'IPFS_PATH',
+  'AWS_ACCESS_KEY_ID',
+  'AWS_SECRET_ACCESS_KEY',
+  'AWS_BUCKET_NAME',
+  'AWS_S3_ENDPOINT',
+  'AWS_S3_ADDRESSING_STYLE',
+  'AWS_S3_SIGNATURE_VERSION',
+]
+const envConfig = pick(process.env, configKeys)
 
 const preHandler = (handler, event, context, callback) => {
-  if (!addressMgr.isSecretsSet() || !linkMgr.isSecretsSet() || uPortMgr.isSecretsSet()) {
-    const kms = new AWS.KMS()
-    kms
-      .decrypt({ CiphertextBlob: Buffer(process.env.SECRETS, 'base64') })
-      .promise()
-      .then(data => {
-        const decrypted = String(data.Plaintext)
-        const config = Object.assign(JSON.parse(decrypted), envConfig)
-        addressMgr.setSecrets(config)
-        linkMgr.setSecrets(config)
-        return uPortMgr.setSecrets(config)
-      }).then(res => {
-        doHandler(handler, event, context, callback)
+  if (!addressMgr.isSecretsSet() || !linkMgr.isSecretsSet() || !uPortMgr.isSecretsSet()) {
+    // Try setting from environment first
+    addressMgr.setSecrets(envConfig)
+    linkMgr.setSecrets(envConfig)
+    uPortMgr.setSecrets(envConfig)
+      .then((res) => {
+        if (addressMgr.isSecretsSet() && linkMgr.isSecretsSet() && uPortMgr.isSecretsSet()) {
+          return doHandler(handler, event, context, callback)
+        }
+        // If secrets not set form environment, get values from KMS
+        const kms = new AWS.KMS()
+        return kms
+          .decrypt({ CiphertextBlob: Buffer(process.env.SECRETS, 'base64') })
+          .promise()
+          .then(data => {
+            const decrypted = String(data.Plaintext)
+            const config = Object.assign(JSON.parse(decrypted), envConfig)
+            addressMgr.setSecrets(config)
+            linkMgr.setSecrets(config)
+            return uPortMgr.setSecrets(config)
+          }).then(res => {
+            doHandler(handler, event, context, callback)
+          })
       })
   } else {
     doHandler(handler, event, context, callback)

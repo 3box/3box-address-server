@@ -6,7 +6,7 @@ class AddressMgr {
   }
 
   isSecretsSet () {
-    return this.pgUrl !== null
+    return this.pgUrl != null
   }
 
   setSecrets (secrets) {

@@ -6,7 +6,7 @@ class LinkMgr {
   }
 
   isSecretsSet() {
-    return this.pgUrl !== null;
+    return this.pgUrl != null;
   }
 
   setSecrets(secrets) {
