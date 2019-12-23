@@ -86,7 +86,8 @@ const preHandler = (handler, event, context, callback) => {
     addressMgr.setSecrets(envConfig)
     linkMgr.setSecrets(envConfig)
     uPortMgr.setSecrets(envConfig)
-      .then((res) => {
+      .catch(e => {}) // ignore error since we are retrying below if needed
+      .finally((res) => {
         if (addressMgr.isSecretsSet() && linkMgr.isSecretsSet() && uPortMgr.isSecretsSet()) {
           return doHandler(handler, event, context, callback)
         }

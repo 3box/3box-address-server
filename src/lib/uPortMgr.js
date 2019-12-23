@@ -24,11 +24,8 @@ class UportMgr {
       s3ForcePathStyle: secrets.AWS_S3_ADDRESSING_STYLE === 'path',
       signatureVersion: secrets.AWS_S3_SIGNATURE_VERSION,
     }
-    try {
-      this.ipfs = await initIPFS(config)
-      register(this.ipfs)
-    }
-    catch (e) { }
+    this.ipfs = await initIPFS(config)
+    register(this.ipfs)
   }
 
   async verifyToken(token) {
