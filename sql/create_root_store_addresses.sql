@@ -5,7 +5,7 @@
 CREATE TABLE public.root_store_addresses
 (
     root_store_address VARCHAR(200) NOT NULL, --OrbitDB root store address
-    did VARCHAR(64), -- did
+    did VARCHAR(100), -- did
     CONSTRAINT root_store_addresses_pkey PRIMARY KEY (did)
 )
 WITH (
