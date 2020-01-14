@@ -18,8 +18,6 @@ class UportMgr {
     const config = {
       ipfsPath: secrets.IPFS_PATH,
       bucket: secrets.AWS_BUCKET_NAME,
-      accessKeyId: secrets.AWS_ACCESS_KEY_ID,
-      secretAccessKey: secrets.AWS_SECRET_ACCESS_KEY,
       endpoint: secrets.AWS_S3_ENDPOINT,
       s3ForcePathStyle: secrets.AWS_S3_ADDRESSING_STYLE === 'path',
       signatureVersion: secrets.AWS_S3_SIGNATURE_VERSION,
