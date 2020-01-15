@@ -1,3 +1,6 @@
+## v1.1.5 - 2020-01-15
+* fix: let AWS S3 client load credentials from environment variables
+
 ## v1.1.4 - 2020-01-07
 * feat: load secrets from env vars only (if valid)
 * feat: add dockerfile for local development using serverless offline
