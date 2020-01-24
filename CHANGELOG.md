@@ -1,3 +1,6 @@
+## v1.1.6 - 2020-01-24
+* fix: don't verify EOA type signature for erc1271 contracts
+
 ## v1.1.5 - 2020-01-15
 * fix: let AWS S3 client load credentials from environment variables
 
