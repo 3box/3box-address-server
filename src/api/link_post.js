@@ -87,7 +87,7 @@ class LinkPostHandler {
     } = await handlers[version](body, cb)
 
     // Get address from signature + msg
-    const address = await this.sigMgr.verify(msg, sig)
+    const address = type === ACCOUNT_TYPES.erc1271 ? contractAddress : await this.sigMgr.verify(msg, sig)
     const consent = JSON.stringify({ msg, sig })
 
     await this.linkMgr.store(address, did, consent, type, chainId, contractAddress, timestamp)
