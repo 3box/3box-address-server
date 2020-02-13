@@ -31,6 +31,15 @@ describe('RootStoreAddressesPost', () => {
         } else if (did === did4) {
           return { root_store_address: rsAddress4 }
         }
+      }),
+      getMultiple: jest.fn().mockImplementation(dids => {
+        return dids.map((did) => {
+          const rsAddressRow = addressMgrMock.get(did)
+          if (rsAddressRow) {
+            rsAddressRow.did = did
+            return rsAddressRow
+          }
+        }).filter(rsAddressRow => !!rsAddressRow)
       })
     }
     linkMgrMock = {
@@ -40,6 +49,15 @@ describe('RootStoreAddressesPost', () => {
         } else if (addr === address2) {
           return { did: did2 }
         }
+      }),
+      getMultiple: jest.fn().mockImplementation(addresses => {
+        return addresses.map((addr) => {
+          const didRow = linkMgrMock.get(addr)
+          if (didRow) {
+            didRow.address = addr
+            return didRow
+          }
+        }).filter(didRow => !!didRow)
       })
     }
     sut = new RootStoreAddressesPost(addressMgrMock, linkMgrMock)

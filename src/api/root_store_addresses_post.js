@@ -19,53 +19,48 @@ class RootStoreAddressesPostHandler {
       return
     }
 
-    let promises = []
-    let resultObj = {}
-    const getRootStoreFromId = async id => {
-      const did = await this.getDID(id)
-      if (did) {
-        const rootStoreAddress = await this.getRootStore(did)
-        if (rootStoreAddress) {
-          resultObj[id] = rootStoreAddress
-        }
+    const idDidMap = await this.getDIDs(body.identities)
+    const didRootStoreMap = await this.getRootStores(Object.values(idDidMap))
+    
+    const rootStoreAddresses = Object.keys(idDidMap).reduce((acc, id) => {
+      if (didRootStoreMap[idDidMap[id]]) {
+        acc[id] = didRootStoreMap[idDidMap[id]]
       }
-    }
-    body.identities.forEach(id => {
-      promises.push(getRootStoreFromId(id))
-    })
-    await Promise.all(promises)
-    cb(null, { rootStoreAddresses: resultObj })
+      return acc
+    }, {})
+    cb(null, { rootStoreAddresses })
   }
 
-  async getRootStore(did) {
+  async getRootStores(dids) {
+    if (!dids || !dids.length) {
+      return {}
+    }
     // Get rsAddress for did from db
-    const rsAddress = await this.addressMgr.get(did)
-    if (!rsAddress) {
-      return null
-    } else {
-      return rsAddress.root_store_address
-    }
+    const rsAddressRows = await this.addressMgr.getMultiple(dids)
+    return rsAddressRows.reduce((acc, row) => {
+      acc[row.did] = row.root_store_address
+      return acc
+    }, {})
   }
 
-  async getDID(id) {
-    // Check if id is an address or a did
-    let did
-    if (id.startsWith('0x')) {
-      const { error } = hexString.validate(id)
-      if (error) {
-        return null
-      }
-      const didRow = await this.linkMgr.get(id)
-      if (!didRow) {
-        return null
-      }
-      did = didRow.did
-    } else if (id.startsWith('did:')) {
-      did = id
-    } else {
-      return null
+  async getDIDs(ids) {
+    if (!ids || !ids.length) {
+      return {}
     }
-    return did
+    const { dids, addresses } = ids.reduce((acc, id) => {
+      if (id.startsWith('0x') && !hexString.validate(id).error) {
+        acc.addresses.push(id)
+      } else if (id.startsWith('did:')) {
+        acc.dids.push(id)
+      }
+      return acc
+    }, { dids: [], addresses: [] })
+    const didRows = addresses.length == 0 ? [] : await this.linkMgr.getMultiple(addresses)
+    
+    const results = {}
+    didRows.forEach(row => results[row.address] = row.did)
+    dids.forEach(did => results[did] = did)
+    return results
   }
 }
 module.exports = RootStoreAddressesPostHandler
