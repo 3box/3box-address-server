@@ -1,7 +1,10 @@
+const { createLogger } = require("../logger")
+
 class LinkDeleteHandler {
   constructor(uPortMgr, linkMgr) {
     this.uPortMgr = uPortMgr
     this.linkMgr = linkMgr
+    this.logger = createLogger({ name: "Address Server - Link Delete Module"})
   }
 
   async handle(event, context, cb) {
@@ -26,8 +29,7 @@ class LinkDeleteHandler {
       let token = await this.uPortMgr.verifyToken(body.delete_token)
       payload = token.payload
     } catch (error) {
-      console.log('Error on this.uportMgr.verifyToken')
-      console.log(error)
+      this.logger.error('Error on this.uportMgr.verifyToken', { error })
       cb({ code: 401, message: 'Invalid JWT' })
       return
     }

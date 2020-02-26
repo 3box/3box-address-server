@@ -1,7 +1,10 @@
-class RootStoreAddressPost {
+const { createLogger } = require("../logger")
+
+class RootStoreAddressPost{
   constructor (uPortMgr, addressMgr) {
     this.uPortMgr = uPortMgr
     this.addressMgr = addressMgr
+    this.logger = createLogger({ name: "Address Server - RootStore Address Post module" })
   }
 
   async handle (event, context, cb) {
@@ -25,8 +28,7 @@ class RootStoreAddressPost {
       let dtoken = await this.uPortMgr.verifyToken(body.address_token)
       payload = dtoken.payload
     } catch (error) {
-      console.log('Error on this.uportMgr.verifyToken')
-      console.log(error)
+      this.logger.error('Error on this.uportMgr.verifyToken', { error })
       cb({ code: 401, message: 'Invalid JWT' })
       return
     }
