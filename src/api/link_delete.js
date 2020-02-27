@@ -4,7 +4,7 @@ class LinkDeleteHandler {
   constructor(uPortMgr, linkMgr) {
     this.uPortMgr = uPortMgr
     this.linkMgr = linkMgr
-    this.logger = createLogger({ name: "Address Server - Link Delete Module"})
+    this.logger = createLogger({ name: "link_delete" })
   }
 
   async handle(event, context, cb) {
