@@ -12,4 +12,4 @@ COPY serverless.yml webpack.config.js .babelrc ./
 
 EXPOSE 3000
 
-CMD serverless offline start --printOutput
+CMD serverless offline start --noEnvironment --printOutput
