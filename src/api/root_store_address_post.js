@@ -4,7 +4,7 @@ class RootStoreAddressPost{
   constructor (uPortMgr, addressMgr) {
     this.uPortMgr = uPortMgr
     this.addressMgr = addressMgr
-    this.logger = createLogger({ name: "root_store_address_post" })
+    this.logger = createLogger({ name: "api.root_store_address_post" })
   }
 
   async handle (event, context, cb) {
