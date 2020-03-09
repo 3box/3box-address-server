@@ -30,7 +30,7 @@ jobs:
           name: deploy-to-serverless
           command: |
             sls package
-            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+            if [ "${CIRCLE_BRANCH}" == "feat/bunyan-logger" ]; then
               sls deploy --stage develop
             fi
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
