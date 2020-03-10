@@ -31,7 +31,10 @@ class RootStoreAddressPost{
 	message: 'this is an error',
       }
     } catch (error) {
-      this.logger.error('Error on this.uportMgr.verifyToken', { error })
+      this.logger.error({
+	msg: 'Error verifying the token',
+	err: error,
+      })
       cb({ code: 401, message: 'Invalid JWT' })
       return
     }

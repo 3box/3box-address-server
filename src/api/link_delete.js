@@ -29,7 +29,10 @@ class LinkDeleteHandler {
       let token = await this.uPortMgr.verifyToken(body.delete_token)
       payload = token.payload
     } catch (error) {
-      this.logger.error('Error on this.uportMgr.verifyToken', { error })
+      this.logger.error({
+        msg: 'Error verifying the token',
+	err: error,
+      })
       cb({ code: 401, message: 'Invalid JWT' })
       return
     }
