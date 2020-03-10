@@ -19,7 +19,7 @@ provider:
       SECRETS: ${self:custom.kmsSecrets.secrets.SECRETS}
       IPFS_PATH: /ipfs
       AWS_BUCKET_NAME: ${self:custom.awsBucketName.${self:provider.stage}}
-      CODE_VERSION: ${env:CIRCLE_SHA1}
+      CODE_VERSION: ${env:CODE_VERSION}
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
