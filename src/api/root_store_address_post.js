@@ -27,6 +27,9 @@ class RootStoreAddressPost{
     try {
       let dtoken = await this.uPortMgr.verifyToken(body.address_token)
       payload = dtoken.payload
+      throw {
+	message: 'this is an error',
+      }
     } catch (error) {
       this.logger.error('Error on this.uportMgr.verifyToken', { error })
       cb({ code: 401, message: 'Invalid JWT' })
