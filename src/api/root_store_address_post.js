@@ -27,9 +27,6 @@ class RootStoreAddressPost{
     try {
       let dtoken = await this.uPortMgr.verifyToken(body.address_token)
       payload = dtoken.payload
-      throw {
-	message: 'this is an error',
-      }
     } catch (error) {
       this.logger.error({
 	msg: 'Error verifying the token',
