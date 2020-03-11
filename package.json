@@ -26,7 +26,7 @@
   "homepage": "https://github.com/3box/3box-addresses-server#readme",
   "devDependencies": {
     "@babel/core": "^7.1.6",
-    "aws-sdk-mock": "^4.1.0",
+    "aws-sdk-mock": "^5.1.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.4",
