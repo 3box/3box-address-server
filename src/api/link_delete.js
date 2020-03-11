@@ -31,7 +31,7 @@ class LinkDeleteHandler {
     } catch (error) {
       this.logger.error({
         msg: 'Error verifying the token',
-	err: error,
+        err: error,
       })
       cb({ code: 401, message: 'Invalid JWT' })
       return

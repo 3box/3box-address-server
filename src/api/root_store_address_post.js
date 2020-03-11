@@ -29,8 +29,8 @@ class RootStoreAddressPost{
       payload = dtoken.payload
     } catch (error) {
       this.logger.error({
-	msg: 'Error verifying the token',
-	err: error,
+        msg: 'Error verifying the token',
+        err: error,
       })
       cb({ code: 401, message: 'Invalid JWT' })
       return
