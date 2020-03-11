@@ -31,7 +31,7 @@ jobs:
           command: |
             sls package
             export CODE_VERSION=${CIRCLE_SHA1:0:7}
-            if [ "${CIRCLE_BRANCH}" == "feat/bunyan-logger" ]; then
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
               sls deploy --stage develop
             fi
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
