@@ -56,6 +56,26 @@ class LinkMgr {
     }
   }
 
+  async getMultiple(addresses) {
+    if (!addresses || !addresses.length) throw new Error("no addresses");
+    if (!this.pgUrl) throw new Error("no pgUrl set");
+
+    const client = new Client({ connectionString: this.pgUrl });
+
+    try {
+      await client.connect();
+      const res = await client.query(
+        `SELECT address, did FROM links WHERE address = ANY ($1)`,
+        [addresses]
+      );
+      return res.rows
+    } catch (e) {
+      throw e;
+    } finally {
+      await client.end();
+    }
+  }
+
   async remove(address) {
     if (!address) throw new Error("no address");
     if (!this.pgUrl) throw new Error("no pgUrl set");
