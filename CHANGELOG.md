@@ -1,3 +1,6 @@
+## v1.2.0 - 2020-03-12
+* feat: add bunyan logger
+
 ## v1.1.6 - 2020-01-24
 * fix: don't verify EOA type signature for erc1271 contracts
 
