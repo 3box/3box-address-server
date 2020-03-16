@@ -46,7 +46,7 @@
     "cids": "0.7.1",
     "did-jwt": "^0.2.0",
     "did-resolver": "0.0.6",
-    "eth-sig-util": "^2.0.2",
+    "eth-sig-util": "2.5.2",
     "ethers": "^4.0.37",
     "ipfs-s3-dag-get": "^0.1.13",
     "is-ipfs": "^0.6.1",
