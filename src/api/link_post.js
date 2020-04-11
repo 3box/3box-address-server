@@ -4,7 +4,8 @@ const ethers = require('ethers')
 const ACCOUNT_TYPES = {
   ethereum: 'ethereum',
   ethereumEOA: 'ethereum-eoa',
-  erc1271: 'erc1271'
+  erc1271: 'erc1271',
+  conflux: 'conflux'
 }
 
 const SUPPORTED_CHAINS = {
