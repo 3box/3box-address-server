@@ -1,13 +1,9 @@
 import { verifyJWT } from "did-jwt"
 import { initIPFS } from "ipfs-s3-dag-get"
-const register3idResolver = require('3id-resolver')
-const registerMuPortResolver = require("muport-did-resolver")
+const { Resolver } = require('did-resolver')
+const get3IdResolver = require('3id-resolver').getResolver
+const getMuportResolver = require("muport-did-resolver").getResolver
 
-// Register resolvers
-function register (ipfs) {
-  register3idResolver(ipfs)
-  registerMuPortResolver(ipfs)
-}
 
 class UportMgr {
   isSecretsSet() {
@@ -23,12 +19,15 @@ class UportMgr {
       signatureVersion: secrets.AWS_S3_SIGNATURE_VERSION,
     }
     this.ipfs = await initIPFS(config)
-    register(this.ipfs)
+    this.resolver = new Resolver({
+      ...get3IdResolver(this.ipfs),
+      ...getMuportResolver(this.ipfs)
+    })
   }
 
   async verifyToken(token) {
     if (!token) throw new Error("no token");
-    return verifyJWT(token);
+    return verifyJWT(token, { resolver: this.resolver });
   }
 }
 
