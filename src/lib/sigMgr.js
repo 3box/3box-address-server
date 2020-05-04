@@ -1,4 +1,4 @@
-import sigUtil from 'eth-sig-util'
+const sigUtil = require('eth-sig-util')
 
 class SigMgr {
   async verify (msg, personalSig) {

@@ -1,3 +1,6 @@
+## v1.3.0 - 2020-05-01
+* chore: upgrade did-resolver and did-jwt libraries
+
 ## v1.2.0 - 2020-03-12
 * feat: add bunyan logger
 * feat: add fetch mutliple links and root store address queries
