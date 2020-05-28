@@ -28,7 +28,7 @@
     "@babel/core": "^7.1.6",
     "aws-sdk-mock": "^4.1.0",
     "babel-core": "^6.26.3",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^26.0.1",
     "babel-loader": "^8.0.4",
     "babel-preset-env": "^1.7.0",
     "jest": "^24.8.0",
