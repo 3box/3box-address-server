@@ -17,6 +17,7 @@ class UportMgr {
       endpoint: secrets.AWS_S3_ENDPOINT,
       s3ForcePathStyle: secrets.AWS_S3_ADDRESSING_STYLE === 'path',
       signatureVersion: secrets.AWS_S3_SIGNATURE_VERSION,
+      shardBlockstore: true
     }
     this.ipfs = await initIPFS(config)
     this.resolver = new Resolver({
