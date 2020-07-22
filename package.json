@@ -40,7 +40,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
-    "3id-resolver": "^1.0.0",
+    "3id-resolver": "^1.0.1",
     "aws-sdk": "^2.574.0",
     "bunyan": "^1.8.14",
     "cids": "0.8.3",
