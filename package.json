@@ -45,7 +45,7 @@
     "bunyan": "^1.8.14",
     "cids": "0.8.3",
     "did-jwt": "^4.4.0",
-    "did-resolver": "^1.1.0",
+    "did-resolver": "^2.0.1",
     "eth-sig-util": "^2.0.2",
     "ethers": "^4.0.37",
     "ipfs-s3-dag-get": "^0.2.0",
