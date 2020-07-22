@@ -13,7 +13,7 @@ class UportMgr {
   async setSecrets(secrets) {
     const config = {
       ipfsPath: secrets.IPFS_PATH,
-      bucket: 'ipfs.3box.io',
+      bucket: secrets.AWS_BUCKET_NAME,
       endpoint: secrets.AWS_S3_ENDPOINT,
       s3ForcePathStyle: secrets.AWS_S3_ADDRESSING_STYLE === 'path',
       signatureVersion: secrets.AWS_S3_SIGNATURE_VERSION,
