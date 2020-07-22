@@ -31,7 +31,7 @@ plugins:
 custom:
   awsBucketName:
     develop: ipfs-dev.3box.io
-    master: ipfs-bucket-test.3box.io
+    master: ipfs.3box.io
   webpackIncludeModules: true
   serverless-kms-secrets:
     secretsFile: kms-secrets.${self:provider.stage}.${self:provider.region}.yml
