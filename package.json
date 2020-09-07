@@ -52,7 +52,7 @@
     "is-ipfs": "^1.0.3",
     "js-sha256": "^0.9.0",
     "muport-did-resolver": "^1.0.3",
-    "pg": "^8.3.0"
+    "pg": "^8.3.3"
   },
   "jest": {
     "coverageDirectory": "./coverage/",
