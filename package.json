@@ -44,7 +44,7 @@
     "aws-sdk": "^2.762.0",
     "bunyan": "^1.8.14",
     "cids": "1.0.1",
-    "did-jwt": "^4.5.1",
+    "did-jwt": "^4.6.2",
     "did-resolver": "^2.1.1",
     "eth-sig-util": "^2.0.2",
     "ethers": "^5.0.15",
