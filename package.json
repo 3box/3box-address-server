@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "3id-resolver": "^1.0.1",
-    "aws-sdk": "^2.767.0",
+    "aws-sdk": "^2.771.0",
     "bunyan": "^1.8.14",
     "cids": "1.0.1",
     "did-jwt": "^4.6.2",
