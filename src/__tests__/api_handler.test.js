@@ -10,6 +10,16 @@ jest.mock('ipfs-s3-dag-get', () => {
   }
 })
 
+jest.mock('pg')
+import { Client } from 'pg'
+let pgClientMock = {
+  connect: jest.fn(),
+  end: jest.fn()
+}
+Client.mockImplementation(() => {
+  return pgClientMock
+})
+
 describe('apiHandler', () => {
   beforeAll(() => {
     MockAWS.mock('KMS', 'decrypt', Promise.resolve({ Plaintext: '{}' }))

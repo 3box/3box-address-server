@@ -6,6 +6,7 @@ const AddressMgr = require('./lib/addressMgr')
 const LinkMgr = require('./lib/linkMgr')
 const UportMgr = require('./lib/uPortMgr')
 const SigMgr = require('./lib/sigMgr')
+const { Client } = require('pg')
 
 const RootStoreAddressPostHanlder = require('./api/root_store_address_post')
 const RootStoreAddressGetHanlder = require('./api/root_store_address_get')
@@ -18,46 +19,71 @@ let sigMgr = new SigMgr()
 let addressMgr = new AddressMgr()
 let linkMgr = new LinkMgr()
 
-const doHandler = (handler, event, context, callback) => {
-  handler.handle(event, context, (err, resp) => {
-    let response
-    if (err == null) {
-      response = {
-        statusCode: 200,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-          'Access-Control-Allow-Headers': 'snaphuntjwttoken',
-          'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT'
-        },
-        body: JSON.stringify({
-          status: 'success',
-          data: resp
-        })
-      }
-    } else {
-      let code = 500
-      if (err.code) code = err.code
-      let message = err
-      if (err.message) message = err.message
+const doHandler = async (handler, event, context, callback) => {
+  const client = new Client({ connectionString: addressMgr.pgUrl })
+  addressMgr.setClient(client)
+  linkMgr.setClient(client)
+  try {
+    // at this point the secret should be set and we can access pgUrl
+    await client.connect()
 
-      response = {
-        statusCode: code,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Credentials': true,
-          'Access-Control-Allow-Headers': 'snaphuntjwttoken',
-          'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT'
-        },
-        body: JSON.stringify({
-          status: 'error',
-          message: message
-        })
-      }
-    }
+    context.client = client
+    handler.handle(event, context, (err, resp) => {
+      let response
+      if (err == null) {
+        response = {
+          statusCode: 200,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+            'Access-Control-Allow-Headers': 'snaphuntjwttoken',
+            'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT'
+          },
+          body: JSON.stringify({
+            status: 'success',
+            data: resp
+          })
+        }
+      } else {
+        let code = 500
+        if (err.code) code = err.code
+        let message = err
+        if (err.message) message = err.message
 
-    callback(null, response)
-  })
+        response = {
+          statusCode: code,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': true,
+            'Access-Control-Allow-Headers': 'snaphuntjwttoken',
+            'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT'
+          },
+          body: JSON.stringify({
+            status: 'error',
+            message: message
+          })
+        }
+      }
+
+      callback(null, response)
+    })
+  } catch (e) {
+    callback(null, {
+      statusCode: code,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Headers': 'snaphuntjwttoken',
+        'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT'
+      },
+      body: JSON.stringify({
+        status: 'error',
+        message: e.message
+      })
+    })
+  } finally {
+    await client.end();
+  }
 }
 
 const pick = (obj, keys) => {

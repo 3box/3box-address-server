@@ -1,8 +1,7 @@
-import { Client } from "pg";
-
 class LinkMgr {
   constructor() {
     this.pgUrl = null;
+    this.client = null;
   }
 
   isSecretsSet() {
@@ -13,16 +12,19 @@ class LinkMgr {
     this.pgUrl = secrets.PG_URL;
   }
 
+  setClient(client) {
+    this.client = client
+  }
+
   async store(address, did, consent, type, chainId, contractAddress, timestamp) {
     if (!address) throw new Error("no address");
     if (!did) throw new Error("no did");
     if (!consent) throw new Error("no consent");
     if (!this.pgUrl) throw new Error("no pgUrl set");
+    if (!this.client) throw new Error('no client set')
 
-    const client = new Client({ connectionString: this.pgUrl });
     try {
-      await client.connect();
-      const res = await client.query(
+      const res = await this.client.query(
         `INSERT INTO links(address, did, consent, type, chainId, contractAddress, timestamp)
             VALUES ($1, $2, $3, $4, $5, $6, $7)
             ON CONFLICT (address) DO UPDATE SET did = EXCLUDED.did, consent = EXCLUDED.consent`,
@@ -31,68 +33,54 @@ class LinkMgr {
       return res;
     } catch (e) {
       throw e;
-    } finally {
-      await client.end();
     }
   }
 
   async get(address) {
     if (!address) throw new Error("no address");
     if (!this.pgUrl) throw new Error("no pgUrl set");
-
-    const client = new Client({ connectionString: this.pgUrl });
+    if (!this.client) throw new Error('no client set')
 
     try {
-      await client.connect();
-      const res = await client.query(
+      const res = await this.client.query(
         `SELECT did FROM links WHERE address = $1`,
         [address]
       );
       return res.rows[0];
     } catch (e) {
       throw e;
-    } finally {
-      await client.end();
     }
   }
 
   async getMultiple(addresses) {
     if (!addresses || !addresses.length) throw new Error("no addresses");
     if (!this.pgUrl) throw new Error("no pgUrl set");
-
-    const client = new Client({ connectionString: this.pgUrl });
+    if (!this.client) throw new Error('no client set')
 
     try {
-      await client.connect();
-      const res = await client.query(
+      const res = await this.client.query(
         `SELECT address, did FROM links WHERE address = ANY ($1)`,
         [addresses]
       );
       return res.rows
     } catch (e) {
       throw e;
-    } finally {
-      await client.end();
     }
   }
 
   async remove(address) {
     if (!address) throw new Error("no address");
     if (!this.pgUrl) throw new Error("no pgUrl set");
-
-    const client = new Client({ connectionString: this.pgUrl });
+    if (!this.client) throw new Error('no client set')
 
     try {
-      await client.connect();
-      const res = await client.query(
+      const res = await this.client.query(
         `DELETE FROM links WHERE address = $1`,
         [address]
       );
       return res;
     } catch (e) {
       throw e;
-    } finally {
-      await client.end();
     }
   }
 }
