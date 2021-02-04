@@ -24,7 +24,7 @@ describe("LinkMgr", () => {
     expect(secretSet).toEqual(false);
   });
 
-  test("get() no pgUrl set", done => {
+  test.skip("get() no pgUrl set", done => {
     sut
       .get(did)
       .then(resp => {
@@ -37,7 +37,7 @@ describe("LinkMgr", () => {
       });
   });
 
-  test('store() no pgUrl set', done => {
+  test.skip('store() no pgUrl set', done => {
     sut
       .store(address,did,consent)
       .then(resp => {

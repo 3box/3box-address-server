@@ -36,7 +36,7 @@ describe('AddressMgr', () => {
       })
   })
 
-  test.skip('store() no pgUrl set', done => {
+  test('store() no pgUrl set', done => {
     sut
       .store(rsAddress,did)
       .then(resp => {
