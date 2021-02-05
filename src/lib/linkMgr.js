@@ -16,6 +16,10 @@ class LinkMgr {
     this.client = client
   }
 
+  isDBClientSet() {
+    return this.client != null;
+  }
+
   async store(address, did, consent, type, chainId, contractAddress, timestamp) {
     if (!address) throw new Error("no address");
     if (!did) throw new Error("no did");

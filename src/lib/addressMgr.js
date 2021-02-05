@@ -16,6 +16,10 @@ class AddressMgr {
     this.client = client
   }
 
+  isDBClientSet() {
+    return this.client != null;
+  }
+
   async store (rsAddress, did) {
     if (!rsAddress) throw new Error('no root store address')
     if (!did) throw new Error('no did')

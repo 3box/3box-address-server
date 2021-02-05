@@ -20,14 +20,13 @@ let addressMgr = new AddressMgr()
 let linkMgr = new LinkMgr()
 
 const doHandler = async (handler, event, context, callback) => {
-  const client = new Client({ connectionString: addressMgr.pgUrl })
-  addressMgr.setClient(client)
-  linkMgr.setClient(client)
-  try {
-    // at this point the secret should be set and we can access pgUrl
+  if (!addressMgr.isDBClientSet() || !linkMgr.isDBClientSet()) {
+    const client = new Client({ connectionString: addressMgr.pgUrl })
+    addressMgr.setClient(client)
+    linkMgr.setClient(client)
     await client.connect()
-
-    context.client = client
+  }
+  try {
     handler.handle(event, context, (err, resp) => {
       let response
       if (err == null) {
@@ -81,8 +80,6 @@ const doHandler = async (handler, event, context, callback) => {
         message: e.message
       })
     })
-  } finally {
-    await client.end();
   }
 }
 
@@ -105,6 +102,8 @@ const configKeys = [
 const envConfig = pick(process.env, configKeys)
 
 const preHandler = (handler, event, context, callback) => {
+  // allows lambda function to return without closing db connection
+  context.callbackWaitsForEmptyEventLoop = false
   if (!addressMgr.isSecretsSet() || !linkMgr.isSecretsSet() || !uPortMgr.isSecretsSet()) {
     // Try setting from environment first
     addressMgr.setSecrets(envConfig)
