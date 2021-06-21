@@ -43,7 +43,7 @@
     "3id-resolver": "^1.0.0",
     "aws-sdk": "^2.574.0",
     "bunyan": "^1.8.12",
-    "cids": "0.7.1",
+    "cids": "1.1.7",
     "did-jwt": "^4.2.0",
     "did-resolver": "^1.1.0",
     "eth-sig-util": "^2.0.2",
