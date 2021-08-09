@@ -1,3 +1,6 @@
+# ⚠️ ⚠️ Deprecated in favor of Ceramic ⚠️ ⚠️ 
+> 3box.js and related tools built by 3Box Labs are deprecated and no loger supported. Developers are encurraged to build with https://ceramic.network which is a more secure and decentralized protocol for sovereign data.
+
 # 3Box Address Server
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/3box/3box-address-server.svg)](https://greenkeeper.io/)
