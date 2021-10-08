@@ -69,7 +69,7 @@ describe('AddressMgr', () => {
       })
   })
 
-  test.skip('get() fail pg', done => {
+  test('get() fail pg', done => {
     sut.setSecrets({ PG_URL: 'fake' })
     pgClientMock.connect = jest.fn( () =>{
       throw new Error("pg failed");
@@ -97,9 +97,8 @@ describe('AddressMgr', () => {
       return Promise.resolve({ rows: [rsAddress] })
     })
 
-    sut.setClient(pgClientMock)
     sut.get(did).then(resp => {
-      //expect(pgClientMock.connect).toBeCalled()
+      expect(pgClientMock.connect).toBeCalled()
       expect(pgClientMock.query).toBeCalled()
       expect(
         pgClientMock.query
@@ -107,7 +106,7 @@ describe('AddressMgr', () => {
         `SELECT root_store_address FROM root_store_addresses WHERE did = $1`,
         [did]
       )
-      //expect(pgClientMock.end).toBeCalled()
+      expect(pgClientMock.end).toBeCalled()
       expect(resp).toEqual(rsAddress)
 
       done()
@@ -140,7 +139,7 @@ describe('AddressMgr', () => {
       })
   })
 
-  test.skip('store() fail pg', done => {
+  test('store() fail pg', done => {
     sut.setSecrets({ PG_URL: 'fake' })
     pgClientMock.connect = jest.fn( () =>{
       throw new Error("pg failed");
@@ -167,9 +166,8 @@ describe('AddressMgr', () => {
       return Promise.resolve(true)
     })
 
-    sut.setClient(pgClientMock)
     sut.store(rsAddress, did).then(resp => {
-      //expect(pgClientMock.connect).toBeCalled()
+      expect(pgClientMock.connect).toBeCalled()
       expect(pgClientMock.query).toBeCalled()
       expect(
         pgClientMock.query
@@ -177,7 +175,7 @@ describe('AddressMgr', () => {
         `INSERT INTO root_store_addresses(root_store_address, did) VALUES ($1, $2) ON CONFLICT (did) DO UPDATE SET root_store_address = EXCLUDED.root_store_address`,
         [rsAddress, did]
       )
-      //expect(pgClientMock.end).toBeCalled()
+      expect(pgClientMock.end).toBeCalled()
       expect(resp).toBeTruthy()
       done()
     })

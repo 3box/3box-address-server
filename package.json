@@ -1,6 +1,6 @@
 {
   "name": "3box-address-server",
-  "version": "1.5.0",
+  "version": "1.4.0",
   "description": "Keeps track of the root store addresses to the user managed data platform",
   "main": "index.js",
   "scripts": {
