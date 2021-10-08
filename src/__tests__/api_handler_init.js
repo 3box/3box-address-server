@@ -8,16 +8,6 @@ jest.mock('ipfs-s3-dag-get', () => {
   }
 })
 
-jest.mock('pg')
-import { Client } from 'pg'
-let pgClientMock = {
-  connect: jest.fn(),
-  end: jest.fn()
-}
-Client.mockImplementation(() => {
-  return pgClientMock
-})
-
 const { initIPFS: initIPFSMock } = require('ipfs-s3-dag-get')
 
 describe('apiHandler', () => {
@@ -29,8 +19,6 @@ describe('apiHandler', () => {
   let linkSetSecretsMock
   let uPortSetSecretsMock
   let kmsDecryptMock
-  let addressSetClientMock
-  let linkSetClientMock
 
   beforeAll(() => {
     kmsDecryptMock = jest.fn()
@@ -45,8 +33,6 @@ describe('apiHandler', () => {
     addressSetSecretsMock = jest.spyOn(AddressMgr.prototype, 'setSecrets')
     linkSetSecretsMock = jest.spyOn(LinkMgr.prototype, 'setSecrets')
     uPortSetSecretsMock = jest.spyOn(UportMgr.prototype, 'setSecrets')
-    addressSetClientMock = jest.spyOn(AddressMgr.prototype, 'setClient')
-    linkSetClientMock = jest.spyOn(LinkMgr.prototype, 'setClient')
   })
 
   afterEach(() => {
@@ -54,8 +40,6 @@ describe('apiHandler', () => {
     addressSetSecretsMock.mockRestore()
     linkSetSecretsMock.mockRestore()
     uPortSetSecretsMock.mockRestore()
-    addressSetClientMock.mockRestore()
-    linkSetClientMock.mockRestore()
   })
 
   test('should be configured from environment variables if they are valid', (done) => {
@@ -69,8 +53,6 @@ describe('apiHandler', () => {
         expect(linkSetSecretsMock).toHaveBeenCalledTimes(1)
         expect(uPortSetSecretsMock).toHaveBeenCalledTimes(1)
         expect(kmsDecryptMock).not.toHaveBeenCalled()
-        expect(addressSetClientMock).toHaveBeenCalledTimes(1)
-        expect(linkSetClientMock).toHaveBeenCalledTimes(1)
 
         done()
       })
@@ -87,8 +69,6 @@ describe('apiHandler', () => {
         expect(linkSetSecretsMock).toHaveBeenCalledTimes(2)
         expect(uPortSetSecretsMock).toHaveBeenCalledTimes(2)
         expect(kmsDecryptMock).toHaveBeenCalled()
-        expect(addressSetClientMock).toHaveBeenCalledTimes(1)
-        expect(linkSetClientMock).toHaveBeenCalledTimes(1)
 
         done()
       })
@@ -107,8 +87,6 @@ describe('apiHandler', () => {
         expect(linkSetSecretsMock).toHaveBeenCalledTimes(2)
         expect(uPortSetSecretsMock).toHaveBeenCalledTimes(2)
         expect(kmsDecryptMock).toHaveBeenCalled()
-        expect(addressSetClientMock).toHaveBeenCalledTimes(1)
-        expect(linkSetClientMock).toHaveBeenCalledTimes(1)
 
         done()
       })
